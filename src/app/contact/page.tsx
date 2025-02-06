@@ -73,10 +73,10 @@ const Contact = () => {
           className="text-center mb-16"
         >
           <h1 className="text-5xl font-bold gradient-text mb-6">
-            Let's Connect
+            Let&apos;s Connect
           </h1>
           <p className="text-xl text-foreground/70">
-            Have a project in mind? Let's bring it to life together!
+            Have a project in mind? Let&apos;s bring it to life together!
           </p>
         </motion.div>
 
@@ -176,6 +176,13 @@ const Contact = () => {
                         GitHub
                       </a>
                     </div>
+                  </div>
+                  <div className="flex justify-center space-x-4 mt-6">
+                    {socialLinks.map((link, index) => (
+                      <a key={index} href={link.url} target="_blank" rel="noopener noreferrer" style={{ color: link.color }}>
+                        <link.icon size={30} />
+                      </a>
+                    ))}
                   </div>
                 </div>
               </div>

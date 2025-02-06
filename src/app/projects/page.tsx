@@ -1,4 +1,4 @@
-/// <reference types="react" />
+//<reference types="react" />
 'use client';
 
 import React, { useState } from 'react';
@@ -17,7 +17,7 @@ interface Project {
 }
 
 // Technology icon mapping
-const techIcons: { [key: string]: JSX.Element } = {
+const techIcons: { [key: string]: React.ReactElement } = {
   'React': <FaReact className="text-[#61DAFB]" />,
   'Next.js': <SiNextdotjs className="text-white" />,
   'Node.js': <FaNode className="text-[#339933]" />,
