@@ -63,13 +63,18 @@ const ProjectModal = ({ project, onClose }: { project: Project; onClose: () => v
               </span>
             ))}
           </div>
-          <div className="flex flex-wrap gap-4 pt-6">
+          <div className="flex flex-wrap gap-4 pt-6" onClick={(e) => e.stopPropagation()}>
             {project.link && (
               <Link 
                 href={project.link} 
                 target="_blank" 
                 rel="noopener noreferrer"
                 className="button-primary group flex items-center gap-2"
+                onClick={(e) => {
+                  e.preventDefault();
+                  e.stopPropagation();
+                  window.open(project.link, '_blank', 'noopener,noreferrer');
+                }}
               >
                 <span>Live Demo</span>
                 <FaExternalLinkAlt className="text-sm transition-transform group-hover:translate-x-1" />
@@ -81,6 +86,11 @@ const ProjectModal = ({ project, onClose }: { project: Project; onClose: () => v
                 target="_blank" 
                 rel="noopener noreferrer"
                 className="button-secondary group flex items-center gap-2"
+                onClick={(e) => {
+                  e.preventDefault();
+                  e.stopPropagation();
+                  window.open(project.githubLink, '_blank', 'noopener,noreferrer');
+                }}
               >
                 <FaGithub className="text-lg" />
                 <span>View Code</span>

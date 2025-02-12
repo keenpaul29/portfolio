@@ -120,7 +120,7 @@ export default function Home() {
             <p className="text-xl sm:text-2xl text-foreground/80 max-w-3xl mx-auto">
               I am a software engineer with 2+ years of experience in full-stack web development
             </p>
-            <div className="flex justify-center gap-4 text-xl sm:text-2xl text-foreground/80 mt-8">
+            <div className="flex flex-col sm:flex-row justify-center gap-4 text-base sm:text-xl text-foreground/80 mt-8">
               <span className="px-4 py-2 rounded-lg bg-card-bg/0 backdrop-blur-sm flex items-center gap-2">
                 <span className="flex gap-1">
                   <FaReact className="text-[#61DAFB]" />
@@ -130,12 +130,12 @@ export default function Home() {
                 </span>
                 MERN Stack
               </span>
-              <span className="text-primary self-center">•</span>
+              <span className="hidden sm:block text-primary self-center">•</span>
               <span className="px-4 py-2 rounded-lg bg-card-bg/0 backdrop-blur-sm flex items-center gap-2">
                 <SiTypescript className="text-[#3178C6]" />
                 TypeScript
               </span>
-              <span className="text-primary self-center">•</span>
+              <span className="hidden sm:block text-primary self-center">•</span>
               <span className="px-4 py-2 rounded-lg bg-card-bg/0 backdrop-blur-sm flex items-center gap-2">
                 <FaPython className="text-yellow-500" />
                 Python
@@ -143,8 +143,8 @@ export default function Home() {
             </div>
           </motion.div>
 
-          <motion.div variants={item} className="flex flex-wrap gap-6 justify-center pt-6">
-            <Link href="/projects" className="button-primary group relative overflow-hidden">
+          <motion.div variants={item} className="flex flex-col sm:flex-row gap-4 sm:gap-6 justify-center pt-6">
+            <Link href="/projects" className="button-primary group relative overflow-hidden w-full sm:w-auto">
               <span className="relative z-10">My Projects</span>
               <motion.div
                 className="absolute inset-0 bg-white/20 rounded-full"
@@ -172,24 +172,24 @@ export default function Home() {
 
           <motion.div 
             variants={item}
-            className="pt-16 flex gap-8 justify-center text-foreground/60"
+            className="pt-12 sm:pt-16 flex flex-col sm:flex-row gap-6 sm:gap-8 justify-center text-foreground/60"
           >
             <a href="https://github.com/keenpaul29" target="_blank" rel="noopener noreferrer" className="social-link group">
-              <span className="flex items-center gap-2 group-hover:text-primary transition-colors">
+              <span className="flex items-center justify-center gap-2 group-hover:text-primary transition-colors">
                 <FaGithub className="text-xl" />
                 <span>GitHub</span>
               </span>
               <span className="block h-0.5 w-0 group-hover:w-full transition-all duration-300 bg-primary"></span>
             </a>
             <a href="https://linkedin.com/in/puspal-paul" target="_blank" rel="noopener noreferrer" className="social-link group">
-              <span className="flex items-center gap-2 group-hover:text-primary transition-colors">
+              <span className="flex items-center justify-center gap-2 group-hover:text-primary transition-colors">
                 <FaLinkedin className="text-xl" />
                 <span>LinkedIn</span>
               </span>
               <span className="block h-0.5 w-0 group-hover:w-full transition-all duration-300 bg-primary"></span>
             </a>
             <a href="mailto:puspalpaul8@gmail.com" className="social-link group">
-              <span className="flex items-center gap-2 group-hover:text-primary transition-colors">
+              <span className="flex items-center justify-center gap-2 group-hover:text-primary transition-colors">
                 <FaEnvelope className="text-xl" />
                 <span>Email</span>
               </span>
