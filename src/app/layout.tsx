@@ -12,6 +12,7 @@ import { FaHeart } from 'react-icons/fa';
 import { useTheme } from 'next-themes';
 import { ThemeProvider } from 'next-themes';
 import { Analytics } from '@vercel/analytics/next';
+import Script from 'next/script';
 
 // Move fonts outside the component since they need to be initialized at build time
 const geistSans = Geist({
@@ -53,6 +54,16 @@ function RootLayout({
         <link rel="apple-touch-icon" href="/apple-touch-icon.png" type="image/png" />
         <meta name="theme-color" content="#2563eb" />
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+        <Script src="https://www.googletagmanager.com/gtag/js?id=G-MXR6Y58WB8" strategy="afterInteractive" />
+        <Script id="google-analytics" strategy="afterInteractive">
+        {`
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){window.dataLayer.push(arguments);}
+          gtag('js', new Date());
+          gtag('config', 'G-MXR6Y58WB8');
+        `}
+        </Script>
+
       </head>
       <body className="antialiased bg-background text-foreground relative min-h-screen flex flex-col">
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
