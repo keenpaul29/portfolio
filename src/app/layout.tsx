@@ -49,6 +49,7 @@ function RootLayout({
           type="image/svg+xml"
           sizes="any"
         />
+        <meta name="google-adsense-account" content="ca-pub-3488548212651964"></meta>
         <link rel="apple-touch-icon" href="/apple-touch-icon.png" type="image/png" />
         <meta name="theme-color" content="#2563eb" />
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
