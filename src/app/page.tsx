@@ -1,15 +1,16 @@
 'use client';
 import React, { useEffect, useRef } from 'react';
 import Link from 'next/link';
-import { motion } from 'framer-motion';
+import { motion, easeOut } from 'framer-motion';
 import { FaGithub, FaLinkedin, FaEnvelope, FaDownload, FaReact, FaNode, FaPython } from 'react-icons/fa';
 import { SiTypescript, SiMongodb, SiExpress } from 'react-icons/si';
 import { mouseMoveEvent, mouseEnterEvent, mouseLeaveEvent } from './mouseTracker';
+import SplitText from '@/components/SplitText';
 
 export default function Home() {
   const cursorRef = useRef<HTMLDivElement>(null);
   const cursorAuraRef = useRef<HTMLDivElement>(null);
-  
+
 
   useEffect(() => {
     const handleMouseMove = (e: MouseEvent) => {
@@ -54,6 +55,8 @@ export default function Home() {
     show: { opacity: 1, y: 0 }
   };
 
+
+
   return (
     <>
       <div ref={cursorRef} className="custom-cursor" />
@@ -62,10 +65,15 @@ export default function Home() {
         {/* Enhanced background effects */}
         <div className="absolute inset-0 bg-grid-white/[0.02] bg-grid-pattern" />
         <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-secondary/5 to-accent/5 animate-gradient-xy" />
-        
+        <motion.div
+          className="absolute inset-0 w-full h-full bg-noise-pattern opacity-10 pointer-events-none"
+          animate={{ opacity: [0.1, 0.2, 0.1] }}
+          transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }}
+        />
+
         {/* Animated shapes */}
         <div className="absolute inset-0 overflow-hidden">
-          <motion.div 
+          <motion.div
             animate={{
               scale: [1, 1.1, 1],
               rotate: [0, 90, 0],
@@ -75,9 +83,9 @@ export default function Home() {
               repeat: Infinity,
               ease: "linear"
             }}
-            className="absolute top-20 left-20 w-96 h-96 bg-primary/10 rounded-full mix-blend-multiply filter blur-3xl opacity-70" 
+            className="absolute top-20 left-20 w-96 h-96 bg-primary/10 rounded-full mix-blend-multiply filter blur-3xl opacity-70"
           />
-          <motion.div 
+          <motion.div
             animate={{
               scale: [1.1, 1, 1.1],
               rotate: [90, 180, 90],
@@ -87,9 +95,9 @@ export default function Home() {
               repeat: Infinity,
               ease: "linear"
             }}
-            className="absolute top-40 right-20 w-96 h-96 bg-secondary/10 rounded-full mix-blend-multiply filter blur-3xl opacity-70" 
+            className="absolute top-40 right-20 w-96 h-96 bg-secondary/10 rounded-full mix-blend-multiply filter blur-3xl opacity-70"
           />
-          <motion.div 
+          <motion.div
             animate={{
               scale: [1, 1.2, 1],
               rotate: [180, 270, 180],
@@ -99,12 +107,12 @@ export default function Home() {
               repeat: Infinity,
               ease: "linear"
             }}
-            className="absolute -bottom-8 left-40 w-96 h-96 bg-accent/10 rounded-full mix-blend-multiply filter blur-3xl opacity-70" 
+            className="absolute -bottom-8 left-40 w-96 h-96 bg-accent/10 rounded-full mix-blend-multiply filter blur-3xl opacity-70"
           />
         </div>
 
         {/* Main content */}
-        <motion.div 
+        <motion.div
           variants={container}
           initial="hidden"
           animate="show"
@@ -112,8 +120,18 @@ export default function Home() {
         >
           <motion.div variants={item} className="space-y-6">
             <div className="inline-block mb-4 px-6 py-2 border border-primary/20 rounded-full bg-primary/5 backdrop-blur-sm">
-              <span className="text-2xl sm:text-3xl font-medium text-primary">Hello there!</span>
-             </div>
+              <SplitText
+                text="<> Hello, World! </>"
+                className="text-3xl font-semibold text-center"
+                delay={150}
+                animationFrom={{ opacity: 0, transform: 'translate3d(0,50px,0)' }}
+                animationTo={{ opacity: 1, transform: 'translate3d(0,0,0)' }}
+                easing={easeOut}
+                threshold={0.2}
+                rootMargin="-50px"
+                onLetterAnimationComplete={() => console.log('Letter animation completed')}
+              />
+            </div>
             <h1 className="text-6xl sm:text-7xl md:text-8xl font-bold gradient-text leading-tight mb-4">
               I am Puspal
             </h1>
@@ -152,25 +170,37 @@ export default function Home() {
                 animate={{ scale: [0.8, 1.2], opacity: [0.5, 0] }}
                 transition={{ repeat: Infinity, duration: 2, ease: "easeOut" }}
               />
-              <span className="ml-2 inline-block transition-transform group-hover:translate-x-1">→</span>
+              <span className="ml-2 inline-block transition-transform group-hover:translate-x-1 group-hover:scale-110">→</span>
             </Link>
-            <Link href="/contact" className="button-secondary group">
-              Contact Me
-              <span className="ml-2 inline-block transition-transform group-hover:translate-x-1">→</span>
+            <Link href="/contact" className="button-secondary group relative overflow-hidden w-full sm:w-auto">
+              <span className="relative z-10">Contact Me</span>
+              <motion.div
+                className="absolute inset-0 bg-white/20 rounded-full"
+                initial={false}
+                animate={{ scale: [0.8, 1.2], opacity: [0.5, 0] }}
+                transition={{ repeat: Infinity, duration: 2, ease: "easeOut" }}
+              />
+              <span className="ml-2 inline-block transition-transform group-hover:translate-x-1 group-hover:scale-110">→</span>
             </Link>
-            <a 
-              href="/Puspal_Resume.pdf" 
-              download 
-              className="button-secondary group flex items-center"
+            <a
+              href="/Puspal_Resume.pdf"
+              download
+              className="button-secondary group flex items-center relative overflow-hidden w-full sm:w-auto"
               target="_blank"
               rel="noopener noreferrer"
             >
-              Download CV
-              <FaDownload className="ml-2 transition-transform group-hover:translate-y-1" />
+              <span className="relative z-10">Download CV</span>
+              <FaDownload className="ml-2 transition-transform group-hover:translate-y-1 group-hover:scale-110" />
+              <motion.div
+                className="absolute inset-0 bg-white/20 rounded-full"
+                initial={false}
+                animate={{ scale: [0.8, 1.2], opacity: [0.5, 0] }}
+                transition={{ repeat: Infinity, duration: 2, ease: "easeOut" }}
+              />
             </a>
           </motion.div>
 
-          <motion.div 
+          <motion.div
             variants={item}
             className="pt-12 sm:pt-16 flex flex-col sm:flex-row gap-6 sm:gap-8 justify-center text-foreground/60"
           >

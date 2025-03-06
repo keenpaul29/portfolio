@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@next/font": "^14.2.15",
+    "@react-spring/web": "^9.7.5",
     "@types/nodemailer": "^6.4.17",
     "@vercel/analytics": "^1.4.1",
     "@vercel/speed-insights": "^1.1.0",
