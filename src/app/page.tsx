@@ -6,11 +6,22 @@ import { FaGithub, FaLinkedin, FaEnvelope, FaDownload, FaReact, FaNode, FaPython
 import { SiTypescript, SiMongodb, SiExpress } from 'react-icons/si';
 import { mouseMoveEvent, mouseEnterEvent, mouseLeaveEvent } from './mouseTracker';
 import SplitText from '@/components/SplitText';
+import StructuredData from '@/components/StructuredData';
 
 export default function Home() {
   const cursorRef = useRef<HTMLDivElement>(null);
   const cursorAuraRef = useRef<HTMLDivElement>(null);
 
+  const personData = {
+    name: 'Puspal',
+    jobTitle: 'Full Stack Developer',
+    url: 'https://portfolio-phi-dun-34.vercel.app',
+    sameAs: [
+      'https://github.com/keenpaul29',
+      'https://linkedin.com/in/puspal-paul',
+      'https://twitter.com/paul_puspal'
+    ]
+  };
 
   useEffect(() => {
     const handleMouseMove = (e: MouseEvent) => {
@@ -59,6 +70,7 @@ export default function Home() {
 
   return (
     <>
+      <StructuredData type="Person" data={personData} />
       <div ref={cursorRef} className="custom-cursor" />
       <div ref={cursorAuraRef} className="cursor-aura" />
       <main className="flex flex-col items-center justify-center min-h-screen relative overflow-hidden bg-gradient-to-br from-background via-background to-background/50">
@@ -132,8 +144,9 @@ export default function Home() {
                 onLetterAnimationComplete={() => console.log('Letter animation completed')}
               />
             </div>
+            
             <h1 className="text-6xl sm:text-7xl md:text-8xl font-bold gradient-text leading-tight mb-4">
-              I am Puspal
+             I am Puspal
             </h1>
             <p className="text-xl sm:text-2xl text-foreground/80 max-w-3xl mx-auto">
               I am a software engineer with 2+ years of experience in full-stack web development

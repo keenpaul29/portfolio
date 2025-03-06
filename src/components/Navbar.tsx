@@ -2,6 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
+import { FaGithub, FaLinkedin } from 'react-icons/fa';
 import { motion, AnimatePresence } from 'framer-motion';
 
 export default function Navbar() {
@@ -27,6 +28,12 @@ export default function Navbar() {
     { href: '/about', label: 'About' },
     { href: '/projects', label: 'Projects' },
     { href: '/contact', label: 'Contact' },
+    {href: '/blog', label: 'Blogs'}
+  ];
+
+  const socialLinks = [
+    { href: 'https://github.com/keenpaul29', Icon: FaGithub, label: 'GitHub' },
+    { href: 'https://linkedin.com/in/puspal-paul', Icon: FaLinkedin, label: 'LinkedIn' },
   ];
 
   return (
