@@ -30,6 +30,7 @@ export default function Contact() {
       }
     } catch (error) {
       setStatus('error');
+      console.error('Failed to send email:', error);
     }
   };
 

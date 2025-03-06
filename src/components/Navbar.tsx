@@ -44,7 +44,7 @@ export default function Navbar() {
         </Link>
 
         {/* Desktop Menu */}
-        <div className="hidden md:flex gap-6">
+        <div className="hidden md:flex items-center gap-6">
           {menuItems.map((item) => (
             <Link
               key={item.href}
@@ -56,6 +56,22 @@ export default function Navbar() {
               {item.label}
             </Link>
           ))}
+          
+          {/* Social Links */}
+          <div className="flex items-center gap-4 ml-4 border-l border-foreground/20 pl-4">
+            {socialLinks.map(({ href, Icon, label }) => (
+              <a
+                key={href}
+                href={href}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-xl hover:text-primary transition-colors"
+                aria-label={label}
+              >
+                <Icon />
+              </a>
+            ))}
+          </div>
         </div>
 
         {/* Mobile Menu Button */}
@@ -106,6 +122,22 @@ export default function Navbar() {
                   {item.label}
                 </Link>
               ))}
+              
+              {/* Mobile Social Links */}
+              <div className="flex items-center gap-4 mt-4 pt-4 border-t border-foreground/20">
+                {socialLinks.map(({ href, Icon, label }) => (
+                  <a
+                    key={href}
+                    href={href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center gap-2 py-2 px-4 rounded-lg hover:bg-white/10 transition-colors"
+                  >
+                    <Icon className="text-xl" />
+                    <span>{label}</span>
+                  </a>
+                ))}
+              </div>
             </div>
           </motion.div>
         )}

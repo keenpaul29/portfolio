@@ -3,7 +3,6 @@
 
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import Link from 'next/link';
 import { FaGithub, FaExternalLinkAlt, FaReact, FaNode, FaStripe } from 'react-icons/fa';
 import { SiTypescript, SiMongodb, SiExpress, SiNextdotjs, SiTailwindcss, SiRazorpay} from 'react-icons/si';
 

@@ -1,9 +1,9 @@
 'use client';
 
-import { Analytics as VercelAnalytics } from '@vercel/analytics/react';
+import { Analytics as VercelAnalytics } from '@vercel/analytics/next';
 import { SpeedInsights } from '@vercel/speed-insights/next';
 import { GoogleAnalytics } from 'nextjs-google-analytics';
-import { HotjarAnalytics } from 'nextjs-hotjar';
+// import { Hotjar } from 'nextjs-hotjar';
 import Script from 'next/script';
 
 export default function Analytics() {
@@ -20,7 +20,7 @@ export default function Analytics() {
       />
 
       {/* Microsoft Clarity */}
-      <Script strategy="afterInteractive">
+      <Script strategy="afterInteractive" id="microsoft-clarity">
         {`
           (function(c,l,a,r,i,t,y){
             c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
@@ -30,11 +30,8 @@ export default function Analytics() {
         `}
       </Script>
 
-      {/* Hotjar Analytics */}
-      <HotjarAnalytics 
-        hjid={process.env.NEXT_PUBLIC_HOTJAR_ID} 
-        hjsv={process.env.NEXT_PUBLIC_HOTJAR_SNIPPET_VERSION} 
-      />
+      
+      
     </>
   );
 }
