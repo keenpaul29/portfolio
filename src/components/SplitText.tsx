@@ -1,5 +1,6 @@
-import { useSprings, animated, SpringValue, AnimatedProps } from '@react-spring/web';
+import { useSprings, animated, SpringConfig } from '@react-spring/web';
 import { useEffect, useRef, useState } from 'react';
+import React from 'react';
 
 interface SplitTextProps {
     text?: string;
@@ -84,9 +85,14 @@ const SplitText: React.FC<SplitTextProps> = ({
                             .reduce((acc, w) => acc + w.length, 0) + letterIndex;
 
                         return (
+                            // @ts-expect-error - react-spring types conflict
                             <animated.span
                                 key={index}
-                                style={springs[index] as AnimatedProps<{ style: { opacity: SpringValue<number>; transform: SpringValue<string> } }>}
+                                
+                                style={{
+                                    opacity: springs[index].opacity,
+                                    transform: springs[index].transform
+                                }}
                                 className="inline-block transform transition-opacity will-change-transform"
                             >
                                 {letter}

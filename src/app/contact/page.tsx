@@ -1,7 +1,7 @@
 'use client';
 import React, { useState } from 'react';
-import { motion } from 'framer-motion';
-import { FaGithub, FaLinkedin, FaTwitter, FaEnvelope } from 'react-icons/fa';
+import { motion, AnimatePresence } from 'framer-motion';
+import { FaGithub, FaLinkedin, FaTwitter, FaEnvelope, FaCheckCircle, FaExclamationCircle } from 'react-icons/fa';
 
 export default function Contact() {
   const [formData, setFormData] = useState({
@@ -10,9 +10,43 @@ export default function Contact() {
     message: '',
   });
   const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
+  const [touched, setTouched] = useState({
+    name: false,
+    email: false,
+    message: false,
+  });
+
+  const handleBlur = (field: keyof typeof touched) => {
+    setTouched(prev => ({ ...prev, [field]: true }));
+  };
+
+  const isEmailValid = (email: string) => {
+    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+  };
+
+  const getFieldStatus = (field: keyof typeof formData) => {
+    if (!touched[field]) return 'neutral';
+    if (field === 'email' && !isEmailValid(formData.email)) return 'error';
+    if (!formData[field]) return 'error';
+    return 'success';
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    
+    // Mark all fields as touched
+    setTouched({
+      name: true,
+      email: true,
+      message: true,
+    });
+
+    // Validate form
+    if (!formData.name || !formData.email || !formData.message || !isEmailValid(formData.email)) {
+      setStatus('error');
+      return;
+    }
+
     setStatus('loading');
     
     try {
@@ -25,6 +59,12 @@ export default function Contact() {
       if (response.ok) {
         setStatus('success');
         setFormData({ name: '', email: '', message: '' });
+        setTouched({ name: false, email: false, message: false });
+        
+        // Reset success message after 5 seconds
+        setTimeout(() => {
+          setStatus('idle');
+        }, 5000);
       } else {
         setStatus('error');
       }
@@ -67,54 +107,178 @@ export default function Contact() {
                 <label htmlFor="name" className="block text-sm font-medium mb-2">
                   Name
                 </label>
-                <input
-                  type="text"
-                  id="name"
-                  value={formData.name}
-                  onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                  className="w-full px-4 py-2 rounded-lg bg-card-bg border border-card-border focus:border-primary focus:ring-1 focus:ring-primary"
-                  required
-                />
+                <div className="relative">
+                  <input
+                    type="text"
+                    id="name"
+                    value={formData.name}
+                    onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                    onBlur={() => handleBlur('name')}
+                    className={`w-full px-4 py-2 rounded-lg bg-card-bg border transition-colors duration-200
+                      ${getFieldStatus('name') === 'error' ? 'border-red-500 focus:border-red-500 focus:ring-red-500' :
+                        getFieldStatus('name') === 'success' ? 'border-green-500 focus:border-green-500 focus:ring-green-500' :
+                        'border-card-border focus:border-primary focus:ring-primary'}`}
+                    required
+                  />
+                  <AnimatePresence>
+                    {touched.name && (
+                      <motion.span
+                        initial={{ opacity: 0, scale: 0.5 }}
+                        animate={{ opacity: 1, scale: 1 }}
+                        exit={{ opacity: 0, scale: 0.5 }}
+                        className="absolute right-3 top-1/2 -translate-y-1/2"
+                      >
+                        {getFieldStatus('name') === 'error' ? (
+                          <FaExclamationCircle className="text-red-500" />
+                        ) : (
+                          <FaCheckCircle className="text-green-500" />
+                        )}
+                      </motion.span>
+                    )}
+                  </AnimatePresence>
+                </div>
+                {touched.name && !formData.name && (
+                  <p className="mt-1 text-sm text-red-500">Name is required</p>
+                )}
               </div>
+
               <div>
                 <label htmlFor="email" className="block text-sm font-medium mb-2">
                   Email
                 </label>
-                <input
-                  type="email"
-                  id="email"
-                  value={formData.email}
-                  onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                  className="w-full px-4 py-2 rounded-lg bg-card-bg border border-card-border focus:border-primary focus:ring-1 focus:ring-primary"
-                  required
-                />
+                <div className="relative">
+                  <input
+                    type="email"
+                    id="email"
+                    value={formData.email}
+                    onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                    onBlur={() => handleBlur('email')}
+                    className={`w-full px-4 py-2 rounded-lg bg-card-bg border transition-colors duration-200
+                      ${getFieldStatus('email') === 'error' ? 'border-red-500 focus:border-red-500 focus:ring-red-500' :
+                        getFieldStatus('email') === 'success' ? 'border-green-500 focus:border-green-500 focus:ring-green-500' :
+                        'border-card-border focus:border-primary focus:ring-primary'}`}
+                    required
+                  />
+                  <AnimatePresence>
+                    {touched.email && (
+                      <motion.span
+                        initial={{ opacity: 0, scale: 0.5 }}
+                        animate={{ opacity: 1, scale: 1 }}
+                        exit={{ opacity: 0, scale: 0.5 }}
+                        className="absolute right-3 top-1/2 -translate-y-1/2"
+                      >
+                        {getFieldStatus('email') === 'error' ? (
+                          <FaExclamationCircle className="text-red-500" />
+                        ) : (
+                          <FaCheckCircle className="text-green-500" />
+                        )}
+                      </motion.span>
+                    )}
+                  </AnimatePresence>
+                </div>
+                {touched.email && (!formData.email || !isEmailValid(formData.email)) && (
+                  <p className="mt-1 text-sm text-red-500">
+                    {!formData.email ? 'Email is required' : 'Please enter a valid email address'}
+                  </p>
+                )}
               </div>
+
               <div>
                 <label htmlFor="message" className="block text-sm font-medium mb-2">
                   Message
                 </label>
-                <textarea
-                  id="message"
-                  value={formData.message}
-                  onChange={(e) => setFormData({ ...formData, message: e.target.value })}
-                  rows={5}
-                  className="w-full px-4 py-2 rounded-lg bg-card-bg border border-card-border focus:border-primary focus:ring-1 focus:ring-primary"
-                  required
-                />
+                <div className="relative">
+                  <textarea
+                    id="message"
+                    value={formData.message}
+                    onChange={(e) => setFormData({ ...formData, message: e.target.value })}
+                    onBlur={() => handleBlur('message')}
+                    rows={5}
+                    className={`w-full px-4 py-2 rounded-lg bg-card-bg border transition-colors duration-200
+                      ${getFieldStatus('message') === 'error' ? 'border-red-500 focus:border-red-500 focus:ring-red-500' :
+                        getFieldStatus('message') === 'success' ? 'border-green-500 focus:border-green-500 focus:ring-green-500' :
+                        'border-card-border focus:border-primary focus:ring-primary'}`}
+                    required
+                  />
+                  <AnimatePresence>
+                    {touched.message && (
+                      <motion.span
+                        initial={{ opacity: 0, scale: 0.5 }}
+                        animate={{ opacity: 1, scale: 1 }}
+                        exit={{ opacity: 0, scale: 0.5 }}
+                        className="absolute right-3 top-6"
+                      >
+                        {getFieldStatus('message') === 'error' ? (
+                          <FaExclamationCircle className="text-red-500" />
+                        ) : (
+                          <FaCheckCircle className="text-green-500" />
+                        )}
+                      </motion.span>
+                    )}
+                  </AnimatePresence>
+                </div>
+                {touched.message && !formData.message && (
+                  <p className="mt-1 text-sm text-red-500">Message is required</p>
+                )}
               </div>
-              <button
+
+              <motion.button
                 type="submit"
                 disabled={status === 'loading'}
-                className="button-primary w-full"
+                className={`button-primary w-full relative overflow-hidden ${
+                  status === 'loading' ? 'cursor-wait' : ''
+                }`}
+                whileTap={{ scale: 0.95 }}
               >
-                {status === 'loading' ? 'Sending...' : 'Send Message'}
-              </button>
-              {status === 'success' && (
-                <p className="text-green-500 text-center">Message sent successfully!</p>
-              )}
-              {status === 'error' && (
-                <p className="text-red-500 text-center">Failed to send message. Please try again.</p>
-              )}
+                <AnimatePresence mode="wait">
+                  {status === 'loading' ? (
+                    <motion.div
+                      key="loading"
+                      initial={{ opacity: 0 }}
+                      animate={{ opacity: 1 }}
+                      exit={{ opacity: 0 }}
+                      className="flex items-center justify-center"
+                    >
+                      <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin" />
+                      <span className="ml-2">Sending...</span>
+                    </motion.div>
+                  ) : (
+                    <motion.span
+                      key="send"
+                      initial={{ opacity: 0 }}
+                      animate={{ opacity: 1 }}
+                      exit={{ opacity: 0 }}
+                    >
+                      Send Message
+                    </motion.span>
+                  )}
+                </AnimatePresence>
+              </motion.button>
+
+              <AnimatePresence>
+                {status === 'success' && (
+                  <motion.div
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -10 }}
+                    className="flex items-center justify-center gap-2 text-green-500"
+                  >
+                    <FaCheckCircle />
+                    <span>Message sent successfully!</span>
+                  </motion.div>
+                )}
+                {status === 'error' && (
+                  <motion.div
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -10 }}
+                    className="flex items-center justify-center gap-2 text-red-500"
+                  >
+                    <FaExclamationCircle />
+                    <span>Failed to send message. Please try again.</span>
+                  </motion.div>
+                )}
+              </AnimatePresence>
             </form>
           </motion.div>
 
@@ -127,16 +291,18 @@ export default function Contact() {
             <h2 className="text-2xl font-semibold mb-6">Connect With Me</h2>
             <div className="space-y-6">
               {socialLinks.map((link, index) => (
-                <a
+                <motion.a
                   key={index}
                   href={link.url}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="flex items-center gap-4 p-4 rounded-lg hover:bg-primary/10 transition-colors"
+                  whileHover={{ scale: 1.02 }}
+                  whileTap={{ scale: 0.98 }}
                 >
                   <link.icon className="text-2xl text-primary" />
                   <span className="text-lg">{link.label}</span>
-                </a>
+                </motion.a>
               ))}
             </div>
           </motion.div>
