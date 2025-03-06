@@ -5,12 +5,13 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import Navbar from '../components/Navbar';
 import MouseTracker from '../components/MouseTracker';
-import { Analytics } from '@vercel/analytics/react';
+
 import { SpeedInsights } from '@vercel/speed-insights/next';
 import { SiNextdotjs } from 'react-icons/si';
 import { FaHeart } from 'react-icons/fa';
 import { useTheme } from 'next-themes';
 import { ThemeProvider } from 'next-themes';
+import { Analytics } from '@vercel/analytics/next';
 
 // Move fonts outside the component since they need to be initialized at build time
 const geistSans = Geist({
