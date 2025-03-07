@@ -5,7 +5,6 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import Navbar from '../components/Navbar';
 import MouseTracker from '../components/MouseTracker';
-
 import { SpeedInsights } from '@vercel/speed-insights/next';
 import { SiNextdotjs } from 'react-icons/si';
 import { FaHeart } from 'react-icons/fa';
