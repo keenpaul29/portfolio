@@ -1,0 +1,42 @@
+// Prisma schema for blogging system
+// Dev: SQLite; Prod: switch to postgresql provider and set DATABASE_URL
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model Post {
+  id        String   @id @default(cuid())
+  title     String
+  excerpt   String   @default("")
+  content   String
+  tags      String[]
+  date      DateTime @default(now())
+  readTime  String
+
+  // reaction counters
+  likeCount Int      @default(0)
+  loveCount Int      @default(0)
+  clapCount Int      @default(0)
+
+  comments  Comment[]
+
+  @@index([date])
+}
+
+model Comment {
+  id        String   @id @default(cuid())
+  postId    String
+  author    String   @default("Anonymous")
+  message   String
+  createdAt DateTime @default(now())
+
+  post      Post     @relation(fields: [postId], references: [id], onDelete: Cascade)
+
+  @@index([postId, createdAt])
+}

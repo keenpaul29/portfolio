@@ -1,0 +1,86 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* CSS variables for theming */
+@layer base {
+  :root {
+    --background: #f8fafc; /* light */
+    --foreground: #0a0a0a;
+    --surface: #ffffff;
+    --surface-2: #f1f5f9;
+    --muted: #475569;
+    --border: rgba(15, 23, 42, 0.12);
+
+    --primary: #3b82f6;
+    --primary-foreground: #ffffff;
+    --secondary: #10b981;
+    --secondary-foreground: #06251d;
+  }
+
+  .dark {
+    /* Requested dark background */
+    --background: #0A1A2F;
+    --foreground: #E6EDF7;
+    --surface: #0F2440;   /* elevated surfaces */
+    --surface-2: #102945; /* subdued surfaces */
+    --muted: #A7B7CF;
+    --border: rgba(255, 255, 255, 0.12);
+
+    --primary: #60A5FA; /* lighter blue for dark bg */
+    --primary-foreground: #051225;
+    --secondary: #34D399;
+    --secondary-foreground: #06251d;
+  }
+
+  html { color-scheme: light dark; }
+  body { @apply antialiased; }
+}
+
+/* Reusable components */
+@layer components {
+  .glass-morphism {
+    @apply bg-surface/60 dark:bg-surface/60 backdrop-blur-md border border-border shadow-sm;
+  }
+
+  .button-base {
+    @apply inline-flex items-center justify-center gap-2 rounded-lg px-5 py-3 font-medium transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/40 disabled:opacity-60 disabled:cursor-not-allowed;
+  }
+  .button-primary { @apply button-base bg-primary text-primary-foreground hover:bg-primary/90; }
+  .button-secondary { @apply button-base bg-surface-2 text-foreground hover:bg-surface/80 border border-border; }
+
+  .social-link {
+    @apply inline-flex items-center justify-center rounded-lg p-2 bg-surface-2/60 hover:bg-surface/80 border border-border text-foreground/80 hover:text-foreground transition-colors;
+  }
+
+  .retro-card {
+    @apply rounded-2xl p-6 bg-surface/60 border border-border shadow-lg hover:shadow-xl transition-shadow;
+  }
+}
+
+/* Utilities for text and effects */
+@layer utilities {
+  .gradient-text { @apply bg-clip-text text-transparent bg-gradient-to-r from-primary via-secondary to-primary; }
+  .pixel-text { @apply tracking-wider font-semibold; }
+  .pixel-text-3d {
+    text-shadow: 0 1px 0 rgba(0,0,0,0.2), 0 2px 4px rgba(0,0,0,0.25);
+  }
+
+  /* Subtle retro grid background */
+  .retro-grid {
+    background-image:
+      linear-gradient(to right, rgba(255,255,255,0.06) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(255,255,255,0.06) 1px, transparent 1px);
+    background-size: 24px 24px;
+  }
+
+  /* Custom cursors (desktop only) */
+  .custom-cursor {
+    position: fixed; top: 0; left: 0; width: 6px; height: 6px; border-radius: 9999px; background: var(--primary);
+    transform: translate(-50%, -50%); pointer-events: none; z-index: 50;
+  }
+  .cursor-aura {
+    position: fixed; top: 0; left: 0; width: 32px; height: 32px; border-radius: 9999px; background: rgba(96,165,250,0.15);
+    transform: translate(-50%, -50%); pointer-events: none; z-index: 40; filter: blur(2px);
+  }
+}
