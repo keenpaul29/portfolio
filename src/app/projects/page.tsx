@@ -210,7 +210,6 @@ const Projects = () => {
 
   const categories = ['ALL', 'Full Stack', 'Frontend', 'E-commerce', 'Tools'];
   const filteredProjects = filter === 'ALL' ? projects : projects.filter(p => p.category === filter);
-  const featuredProjects = projects.filter(p => p.featured);
 
   return (
     <div className="min-h-screen pt-24 pb-12 px-4 relative overflow-hidden">
@@ -379,7 +378,7 @@ const Projects = () => {
                 href="/contact"
                 className="button-secondary"
               >
-                LET'S COLLABORATE!
+                LET&apos;S COLLABORATE!
               </a>
             </div>
           </div>

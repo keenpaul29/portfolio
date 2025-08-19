@@ -26,8 +26,9 @@ export default function Blog() {
         const data = await res.json();
         if (!res.ok) throw new Error(data?.error || 'Failed to load');
         if (mounted) setPosts(data.posts || []);
-      } catch (e: any) {
-        if (mounted) setError(e.message || 'Failed to load posts');
+      } catch (e: unknown) {
+        const message = e instanceof Error ? e.message : 'Failed to load posts';
+        if (mounted) setError(message);
       } finally {
         if (mounted) setLoading(false);
       }
@@ -95,3 +96,4 @@ export default function Blog() {
     </div>
   );
 }
+

@@ -34,8 +34,9 @@ export default function NewBlogPost() {
       const data = await res.json();
       if (!res.ok) throw new Error(data?.error || 'Failed to create post');
       router.push(`/blog/${data.post.id}`);
-    } catch (e: any) {
-      setError(e.message || 'Failed to create post');
+    } catch (e: unknown) {
+      const message = e instanceof Error ? e.message : 'Failed to create post';
+      setError(message);
     } finally {
       setSubmitting(false);
     }

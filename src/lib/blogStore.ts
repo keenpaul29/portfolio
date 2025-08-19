@@ -33,8 +33,8 @@ async function readFile(): Promise<{ posts: BlogPost[]; comments: Comment[] } | 
       return { posts: parsed as BlogPost[], comments: [] };
     }
     return parsed;
-  } catch (e: any) {
-    if (e.code === 'ENOENT') {
+  } catch (e: unknown) {
+    if (typeof e === 'object' && e !== null && 'code' in e && (e as { code?: unknown }).code === 'ENOENT') {
       return { posts: [], comments: [] };
     }
     throw e;

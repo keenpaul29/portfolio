@@ -2,23 +2,19 @@
 import React, { useEffect, useRef, useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
-import { motion, useScroll, useTransform } from 'framer-motion';
+import { motion } from 'framer-motion';
 import { FaGithub, FaLinkedin, FaEnvelope, FaDownload, FaCode, FaRocket, FaLightbulb } from 'react-icons/fa';
 import SkillIcon from '@/components/SkillIcon';
 import { mouseMoveEvent, mouseEnterEvent, mouseLeaveEvent } from './mouseTracker';
-import SplitText from '@/components/SplitText';
 import StructuredData from '@/components/StructuredData';
 
 export default function Home() {
   const cursorRef = useRef<HTMLDivElement>(null);
   const cursorAuraRef = useRef<HTMLDivElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
-  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
   const [skillIcons, setSkillIcons] = useState<{ src: string; name: string }[]>([]);
   const [iconPositions, setIconPositions] = useState<Array<{ top: string; left: string }>>([]);
 
-  const { scrollYProgress } = useScroll();
-  const y = useTransform(scrollYProgress, [0, 1], [0, -50]);
 
   const personData = {
     name: 'Puspal',
@@ -33,7 +29,6 @@ export default function Home() {
 
   useEffect(() => {
     const handleMouseMove = (e: MouseEvent) => {
-      setMousePosition({ x: e.clientX, y: e.clientY });
       mouseMoveEvent(e, cursorRef.current, cursorAuraRef.current);
     };
 
@@ -67,7 +62,7 @@ export default function Home() {
         const res = await fetch('/api/skills');
         const data = await res.json();
         setSkillIcons(Array.isArray(data.icons) ? data.icons : []);
-      } catch (e) {
+      } catch {
         setSkillIcons([]);
       }
     };
@@ -364,7 +359,7 @@ export default function Home() {
 
                 <Link href="/contact" className="button-secondary group flex items-center justify-center gap-3 min-w-[220px] shrink-0">
                   <FaLightbulb className="text-xl text-foreground/90 group-hover:text-white group-hover:animate-pulse" />
-                  <span className="uppercase tracking-wide whitespace-nowrap leading-none">LET'S COLLABORATE</span>
+                  <span className="uppercase tracking-wide whitespace-nowrap leading-none">LET&apos;S COLLABORATE</span>
                 </Link>
 
                 <a

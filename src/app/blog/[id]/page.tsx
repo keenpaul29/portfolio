@@ -26,8 +26,8 @@ interface Comment {
 }
 
 export default function BlogPost() {
-  const params = useParams();
-  const id = useMemo(() => (Array.isArray(params?.id) ? params.id[0] : (params as any)?.id) as string, [params]);
+  const params = useParams() as { id?: string | string[] };
+  const id = useMemo(() => (Array.isArray(params?.id) ? params.id[0] : params?.id) as string, [params]);
   const [post, setPost] = useState<BlogPost | null>(null);
   const [comments, setComments] = useState<Comment[]>([]);
   const [loading, setLoading] = useState(true);
@@ -53,8 +53,9 @@ export default function BlogPost() {
           setPost(postJson.post);
           setComments(commentsJson.comments || []);
         }
-      } catch (e: any) {
-        if (mounted) setError(e.message || 'Failed to load');
+      } catch (e: unknown) {
+        const message = e instanceof Error ? e.message : 'Failed to load';
+        if (mounted) setError(message);
       } finally {
         if (mounted) setLoading(false);
       }

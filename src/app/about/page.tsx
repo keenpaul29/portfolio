@@ -1,6 +1,7 @@
 'use client';
 import React from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { motion } from 'framer-motion';
 import { 
   SiJavascript, 
@@ -143,7 +144,7 @@ export default function About() {
           </h1>
           <p className="flex items-center justify-center gap-2 text-base sm:text-lg md:text-xl text-foreground/60 max-w-3xl mx-auto">
             The short story of me: capable, adaptable, and powered by caffeine
-            <img src="/chai.png" alt="Chai" className="w-11 h-11 object-contain" />
+            <Image src="/chai.png" alt="Chai" width={44} height={44} className="w-11 h-11 object-contain" />
           </p>
         </motion.div>
         
@@ -164,7 +165,7 @@ export default function About() {
               <p>
                 With a strong foundation in both frontend and backend development, I specialize in building 
                 <span className="text-green-400 font-bold"> scalable and efficient web applications</span> using industry-level modern technologies. 
-                I'm particularly interested in creating seamless user experiences and solving complex technical challenges.
+                I&apos;m particularly interested in creating seamless user experiences and solving complex technical challenges.
               </p>
               <p>
                 Creative and detail-oriented developer with exceptional skill level and experience in various fields such as 
@@ -398,9 +399,9 @@ export default function About() {
             className="text-center"
           >
             <div className="retro-card max-w-2xl mx-auto">
-              <h3 className="pixel-text text-2xl text-yellow-400 mb-4">LET'S BUILD SOMETHING AMAZING!</h3>
+              <h3 className="pixel-text text-2xl text-yellow-400 mb-4">LET&apos;S BUILD SOMETHING AMAZING!</h3>
               <p className="text-gray-500 mb-8">
-                Ready to bring your ideas to life? Let's collaborate and create something extraordinary together.
+                Ready to bring your ideas to life? Let&apos;s collaborate and create something extraordinary together.
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
                 <Link href="/projects" className="button-primary">

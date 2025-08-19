@@ -5,8 +5,9 @@ export async function GET() {
   try {
     const posts = await listPosts();
     return NextResponse.json({ posts });
-  } catch (e: any) {
-    return NextResponse.json({ error: e?.message ?? 'Failed to list posts' }, { status: 500 });
+  } catch (e: unknown) {
+    const message = e instanceof Error ? e.message : 'Failed to list posts';
+    return NextResponse.json({ error: message }, { status: 500 });
   }
 }
 
@@ -19,7 +20,8 @@ export async function POST(req: Request) {
     }
     const post = await createPost({ title, excerpt: excerpt ?? '', content, tags: Array.isArray(tags) ? tags : [] });
     return NextResponse.json({ post }, { status: 201 });
-  } catch (e: any) {
-    return NextResponse.json({ error: e?.message ?? 'Failed to create post' }, { status: 500 });
+  } catch (e: unknown) {
+    const message = e instanceof Error ? e.message : 'Failed to create post';
+    return NextResponse.json({ error: message }, { status: 500 });
   }
 }

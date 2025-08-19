@@ -105,15 +105,15 @@ export default function Contact() {
             className="inline-flex items-center gap-3 px-6 py-3 mb-8 glass-morphism rounded-full"
           >
             <FaPaperPlane className="text-2xl text-blue-400" />
-            <span className="pixel-text text-lg text-yellow-400">LET'S CONNECT</span>
+            <span className="pixel-text text-lg text-yellow-400">LET&apos;S CONNECT</span>
           </motion.div>
           
           <h1 className="section-title gradient-text mb-6">
             GET IN TOUCH
           </h1>
           <p className="text-xl text-gray-500 max-w-3xl mx-auto">
-            Have a question or want to work together? I'd love to hear from you.
-            Let's create something amazing!
+            Have a question or want to work together? I&apos;d love to hear from you.
+            Let&apos;s create something amazing!
           </p>
         </motion.div>
 
