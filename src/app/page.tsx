@@ -1,9 +1,9 @@
 'use client';
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import Link from 'next/link';
-import { motion, easeOut } from 'framer-motion';
-import { FaGithub, FaLinkedin, FaEnvelope, FaDownload, FaReact, FaNode, FaPython } from 'react-icons/fa';
-import { SiTypescript, SiMongodb, SiExpress } from 'react-icons/si';
+import { motion, useScroll, useTransform } from 'framer-motion';
+import { FaGithub, FaLinkedin, FaEnvelope, FaDownload, FaReact, FaNode, FaPython, FaCode, FaRocket, FaLightbulb } from 'react-icons/fa';
+import { SiTypescript, SiMongodb, SiExpress, SiNextdotjs } from 'react-icons/si';
 import { mouseMoveEvent, mouseEnterEvent, mouseLeaveEvent } from './mouseTracker';
 import SplitText from '@/components/SplitText';
 import StructuredData from '@/components/StructuredData';
@@ -11,6 +11,11 @@ import StructuredData from '@/components/StructuredData';
 export default function Home() {
   const cursorRef = useRef<HTMLDivElement>(null);
   const cursorAuraRef = useRef<HTMLDivElement>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
+  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
+
+  const { scrollYProgress } = useScroll();
+  const y = useTransform(scrollYProgress, [0, 1], [0, -50]);
 
   const personData = {
     name: 'Puspal',
@@ -25,6 +30,7 @@ export default function Home() {
 
   useEffect(() => {
     const handleMouseMove = (e: MouseEvent) => {
+      setMousePosition({ x: e.clientX, y: e.clientY });
       mouseMoveEvent(e, cursorRef.current, cursorAuraRef.current);
     };
 
@@ -51,196 +57,269 @@ export default function Home() {
     };
   }, []);
 
-  const container = {
-    hidden: { opacity: 0 },
-    show: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.2
-      }
-    }
-  };
+  const FloatingElement = ({ children, delay = 0, className = "" }: { children: React.ReactNode, delay?: number, className?: string }) => (
+    <motion.div
+      className={`floating-element ${className}`}
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ delay, duration: 0.8, ease: "easeOut" }}
+    >
+      {children}
+    </motion.div>
+  );
 
-  const item = {
-    hidden: { opacity: 0, y: 20 },
-    show: { opacity: 1, y: 0 }
-  };
-
-
+  const techStack = [
+    { icon: FaReact, name: "React", color: "#61DAFB" },
+    { icon: SiNextdotjs, name: "Next.js", color: "#000000" },
+    { icon: SiTypescript, name: "TypeScript", color: "#3178C6" },
+    { icon: FaNode, name: "Node.js", color: "#339933" },
+    { icon: SiExpress, name: "Express", color: "#000000" },
+    { icon: SiMongodb, name: "MongoDB", color: "#47A248" },
+    { icon: FaPython, name: "Python", color: "#3776AB" },
+  ];
 
   return (
     <>
       <StructuredData type="Person" data={personData} />
-      <div ref={cursorRef} className="custom-cursor" />
-      <div ref={cursorAuraRef} className="cursor-aura" />
-      <main className="flex flex-col items-center justify-center min-h-screen relative overflow-hidden bg-gradient-to-br from-background via-background to-background/50">
-        {/* Enhanced background effects */}
-        <div className="absolute inset-0 bg-grid-white/[0.02] bg-grid-pattern" />
-        <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-secondary/5 to-accent/5 animate-gradient-xy" />
-        <motion.div
-          className="absolute inset-0 w-full h-full bg-noise-pattern opacity-10 pointer-events-none"
-          animate={{ opacity: [0.1, 0.2, 0.1] }}
-          transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }}
-        />
+      
+      {/* Custom Cursor */}
+      <div ref={cursorRef} className="custom-cursor hidden lg:block" />
+      <div ref={cursorAuraRef} className="cursor-aura hidden lg:block" />
 
-        {/* Animated shapes */}
-        <div className="absolute inset-0 overflow-hidden">
-          <motion.div
-            animate={{
-              scale: [1, 1.1, 1],
-              rotate: [0, 90, 0],
-            }}
-            transition={{
-              duration: 20,
-              repeat: Infinity,
-              ease: "linear"
-            }}
-            className="absolute top-20 left-20 w-96 h-96 bg-primary/10 rounded-full mix-blend-multiply filter blur-3xl opacity-70"
-          />
-          <motion.div
-            animate={{
-              scale: [1.1, 1, 1.1],
-              rotate: [90, 180, 90],
-            }}
-            transition={{
-              duration: 15,
-              repeat: Infinity,
-              ease: "linear"
-            }}
-            className="absolute top-40 right-20 w-96 h-96 bg-secondary/10 rounded-full mix-blend-multiply filter blur-3xl opacity-70"
-          />
-          <motion.div
-            animate={{
-              scale: [1, 1.2, 1],
-              rotate: [180, 270, 180],
-            }}
-            transition={{
-              duration: 18,
-              repeat: Infinity,
-              ease: "linear"
-            }}
-            className="absolute -bottom-8 left-40 w-96 h-96 bg-accent/10 rounded-full mix-blend-multiply filter blur-3xl opacity-70"
-          />
+      {/* Hero Section */}
+      <main ref={containerRef} className="relative min-h-screen overflow-hidden">
+        {/* Animated Background */}
+        <div className="absolute inset-0 retro-grid opacity-30" />
+        <div className="absolute inset-0 bg-gradient-to-br from-blue-900/20 via-purple-900/20 to-yellow-900/20" />
+        
+        {/* Floating Elements */}
+        <div className="absolute inset-0 overflow-hidden pointer-events-none">
+          <FloatingElement delay={0.2} className="absolute top-20 left-10 w-16 h-16 bg-gradient-to-r from-blue-400 to-purple-500 rounded-2xl opacity-20" />
+          <FloatingElement delay={0.4} className="absolute top-40 right-20 w-12 h-12 bg-gradient-to-r from-yellow-400 to-orange-500 rounded-full opacity-30" />
+          <FloatingElement delay={0.6} className="absolute bottom-40 left-20 w-20 h-20 bg-gradient-to-r from-green-400 to-blue-500 rounded-3xl opacity-25" />
+          <FloatingElement delay={0.8} className="absolute bottom-20 right-10 w-14 h-14 bg-gradient-to-r from-pink-400 to-red-500 rounded-2xl opacity-20" />
+          
+          {/* Tech Icons Floating */}
+          {techStack.map((tech, index) => (
+            <FloatingElement 
+              key={tech.name}
+              delay={1 + index * 0.1}
+              className={`absolute opacity-10 text-4xl`}
+              style={{
+                top: `${20 + (index * 10)}%`,
+                left: `${10 + (index * 12)}%`,
+                color: tech.color
+              }}
+            >
+              <tech.icon />
+            </FloatingElement>
+          ))}
         </div>
 
-        {/* Main content */}
-        <motion.div
-          variants={container}
-          initial="hidden"
-          animate="show"
-          className="relative z-10 text-center space-y-10 max-w-5xl px-6 py-24 backdrop-blur-sm"
-        >
-          <motion.div variants={item} className="space-y-6">
-            <div className="inline-block mb-4 px-6 py-2 border border-primary/20 rounded-full bg-primary/5 backdrop-blur-sm">
-              <SplitText
-                text="<> Hello, World! </>"
-                className="text-3xl font-semibold text-center"
-                delay={150}
-                animationFrom={{ opacity: 0, transform: 'translate3d(0,50px,0)' }}
-                animationTo={{ opacity: 1, transform: 'translate3d(0,0,0)' }}
-                easing={easeOut}
-                threshold={0.2}
-                rootMargin="-50px"
-                onLetterAnimationComplete={() => console.log('Letter animation completed')}
-              />
-            </div>
-            
-            <h1 className="text-6xl sm:text-7xl md:text-8xl font-bold gradient-text leading-tight mb-4">
-             I am Puspal
-            </h1>
-            <p className="text-xl sm:text-2xl text-foreground/80 max-w-3xl mx-auto">
-              I am a software engineer with 2+ years of experience in full-stack web development
-            </p>
-            <div className="flex flex-col sm:flex-row justify-center gap-4 text-base sm:text-xl text-foreground/80 mt-8">
-              <span className="px-4 py-2 rounded-lg bg-card-bg/0 backdrop-blur-sm flex items-center gap-2">
-                <span className="flex gap-1">
-                  <FaReact className="text-[#61DAFB]" />
-                  <SiMongodb className="text-[#47A248]" />
-                  <SiExpress className="text-white" />
-                  <FaNode className="text-[#339933]" />
-                </span>
-                MERN Stack
-              </span>
-              <span className="hidden sm:block text-primary self-center">•</span>
-              <span className="px-4 py-2 rounded-lg bg-card-bg/0 backdrop-blur-sm flex items-center gap-2">
-                <SiTypescript className="text-[#3178C6]" />
-                TypeScript
-              </span>
-              <span className="hidden sm:block text-primary self-center">•</span>
-              <span className="px-4 py-2 rounded-lg bg-card-bg/0 backdrop-blur-sm flex items-center gap-2">
-                <FaPython className="text-yellow-500" />
-                Python
-              </span>
-            </div>
-          </motion.div>
-
-          <motion.div variants={item} className="flex flex-col sm:flex-row gap-4 sm:gap-6 justify-center pt-6">
-            <Link href="/projects" className="button-primary group relative overflow-hidden w-full sm:w-auto">
-              <span className="relative z-10">My Projects</span>
-              <motion.div
-                className="absolute inset-0 bg-white/20 rounded-full"
-                initial={false}
-                animate={{ scale: [0.8, 1.2], opacity: [0.5, 0] }}
-                transition={{ repeat: Infinity, duration: 2, ease: "easeOut" }}
-              />
-              <span className="ml-2 inline-block transition-transform group-hover:translate-x-1 group-hover:scale-110">→</span>
-            </Link>
-            <Link href="/contact" className="button-secondary group relative overflow-hidden w-full sm:w-auto">
-              <span className="relative z-10">Contact Me</span>
-              <motion.div
-                className="absolute inset-0 bg-white/20 rounded-full"
-                initial={false}
-                animate={{ scale: [0.8, 1.2], opacity: [0.5, 0] }}
-                transition={{ repeat: Infinity, duration: 2, ease: "easeOut" }}
-              />
-              <span className="ml-2 inline-block transition-transform group-hover:translate-x-1 group-hover:scale-110">→</span>
-            </Link>
-            <a
-              href="/Puspal_Resume.pdf"
-              download
-              className="button-secondary group flex items-center relative overflow-hidden w-full sm:w-auto"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              <span className="relative z-10">Download CV</span>
-              <FaDownload className="ml-2 transition-transform group-hover:translate-y-1 group-hover:scale-110" />
-              <motion.div
-                className="absolute inset-0 bg-white/20 rounded-full"
-                initial={false}
-                animate={{ scale: [0.8, 1.2], opacity: [0.5, 0] }}
-                transition={{ repeat: Infinity, duration: 2, ease: "easeOut" }}
-              />
-            </a>
-          </motion.div>
-
+        {/* Main Content */}
+        <div className="relative z-10 flex flex-col items-center justify-center min-h-screen px-4 py-20">
           <motion.div
-            variants={item}
-            className="pt-12 sm:pt-16 flex flex-col sm:flex-row gap-6 sm:gap-8 justify-center text-foreground/60"
+            initial={{ opacity: 0, y: 50 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, ease: "easeOut" }}
+            className="text-center max-w-6xl mx-auto"
           >
-            <a href="https://github.com/keenpaul29" target="_blank" rel="noopener noreferrer" className="social-link group">
-              <span className="flex items-center justify-center gap-2 group-hover:text-primary transition-colors">
-                <FaGithub className="text-xl" />
-                <span>GitHub</span>
-              </span>
-              <span className="block h-0.5 w-0 group-hover:w-full transition-all duration-300 bg-primary"></span>
-            </a>
-            <a href="https://linkedin.com/in/puspal-paul" target="_blank" rel="noopener noreferrer" className="social-link group">
-              <span className="flex items-center justify-center gap-2 group-hover:text-primary transition-colors">
-                <FaLinkedin className="text-xl" />
-                <span>LinkedIn</span>
-              </span>
-              <span className="block h-0.5 w-0 group-hover:w-full transition-all duration-300 bg-primary"></span>
-            </a>
-            <a href="mailto:puspalpaul8@gmail.com" className="social-link group">
-              <span className="flex items-center justify-center gap-2 group-hover:text-primary transition-colors">
-                <FaEnvelope className="text-xl" />
-                <span>Email</span>
-              </span>
-              <span className="block h-0.5 w-0 group-hover:w-full transition-all duration-300 bg-primary"></span>
-            </a>
+            {/* Greeting Badge */}
+            <motion.div
+              initial={{ opacity: 0, scale: 0.8 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ delay: 0.2, duration: 0.6 }}
+              className="inline-flex items-center gap-3 px-6 py-3 mb-8 glass-morphism rounded-full"
+            >
+              <span className="text-2xl">👋</span>
+              <span className="pixel-text text-lg text-yellow-400">HELLO WORLD!</span>
+            </motion.div>
+
+            {/* Main Title */}
+            <div className="mb-8">
+              <motion.h1
+                initial={{ opacity: 0, y: 30 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.4, duration: 0.8 }}
+                className="pixel-text-3d text-6xl sm:text-7xl md:text-8xl lg:text-9xl mb-4"
+                style={{
+                  background: 'linear-gradient(135deg, #00d4ff, #ffeb3b, #ff9800)',
+                  WebkitBackgroundClip: 'text',
+                  WebkitTextFillColor: 'transparent',
+                  backgroundSize: '200% 200%',
+                  animation: 'gradient-shift 3s ease infinite'
+                }}
+              >
+                PUSPAL
+              </motion.h1>
+              
+              <motion.div
+                initial={{ opacity: 0, x: -30 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ delay: 0.6, duration: 0.8 }}
+                className="pixel-text text-2xl sm:text-3xl md:text-4xl text-blue-400 mb-6"
+              >
+                FULL STACK DEVELOPER
+              </motion.div>
+            </div>
+
+            {/* Description */}
+            <motion.p
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.8, duration: 0.8 }}
+              className="text-xl sm:text-2xl text-gray-300 mb-12 max-w-4xl mx-auto leading-relaxed"
+            >
+              Crafting digital experiences with <span className="text-yellow-400 font-bold">2+ years</span> of expertise in 
+              <span className="text-blue-400 font-bold"> modern web technologies</span>. 
+              Passionate about building scalable solutions that make a difference.
+            </motion.p>
+
+            {/* Tech Stack Pills */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 1, duration: 0.8 }}
+              className="flex flex-wrap justify-center gap-4 mb-12"
+            >
+              {techStack.slice(0, 4).map((tech, index) => (
+                <motion.div
+                  key={tech.name}
+                  initial={{ opacity: 0, scale: 0.8 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  transition={{ delay: 1.2 + index * 0.1, duration: 0.6 }}
+                  className="flex items-center gap-2 px-4 py-2 glass-morphism rounded-full hover:scale-105 transition-transform"
+                >
+                  <tech.icon className="text-xl" style={{ color: tech.color }} />
+                  <span className="text-sm font-medium">{tech.name}</span>
+                </motion.div>
+              ))}
+            </motion.div>
+
+            {/* CTA Buttons */}
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 1.4, duration: 0.8 }}
+              className="flex flex-col sm:flex-row gap-6 justify-center items-center mb-16"
+            >
+              <Link href="/projects" className="button-primary group flex items-center gap-3">
+                <FaRocket className="text-xl group-hover:animate-bounce" />
+                <span>VIEW PROJECTS</span>
+                <motion.span
+                  animate={{ x: [0, 5, 0] }}
+                  transition={{ repeat: Infinity, duration: 1.5 }}
+                >
+                  →
+                </motion.span>
+              </Link>
+              
+              <Link href="/contact" className="button-secondary group flex items-center gap-3">
+                <FaLightbulb className="text-xl group-hover:animate-pulse" />
+                <span>LET'S COLLABORATE</span>
+              </Link>
+              
+              <a
+                href="/Puspal_Resume.pdf"
+                download
+                target="_blank"
+                rel="noopener noreferrer"
+                className="button-secondary group flex items-center gap-3"
+              >
+                <FaDownload className="text-xl group-hover:animate-bounce" />
+                <span>DOWNLOAD CV</span>
+              </a>
+            </motion.div>
+
+            {/* Social Links */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 1.6, duration: 0.8 }}
+              className="flex justify-center gap-6"
+            >
+              {[
+                { icon: FaGithub, href: "https://github.com/keenpaul29", label: "GitHub", color: "#333" },
+                { icon: FaLinkedin, href: "https://linkedin.com/in/puspal-paul", label: "LinkedIn", color: "#0077B5" },
+                { icon: FaEnvelope, href: "mailto:puspalpaul8@gmail.com", label: "Email", color: "#EA4335" }
+              ].map((social, index) => (
+                <motion.a
+                  key={social.label}
+                  href={social.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="social-link group"
+                  initial={{ opacity: 0, scale: 0.8 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  transition={{ delay: 1.8 + index * 0.1, duration: 0.6 }}
+                  whileHover={{ scale: 1.1, y: -5 }}
+                  whileTap={{ scale: 0.95 }}
+                  aria-label={social.label}
+                >
+                  <social.icon 
+                    className="text-2xl transition-colors duration-300" 
+                    style={{ color: social.color }}
+                  />
+                </motion.a>
+              ))}
+            </motion.div>
+          </motion.div>
+        </div>
+
+        {/* Scroll Indicator */}
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 2, duration: 1 }}
+          className="absolute bottom-8 left-1/2 transform -translate-x-1/2 flex flex-col items-center gap-2 text-gray-400"
+        >
+          <span className="text-sm pixel-text">SCROLL DOWN</span>
+          <motion.div
+            animate={{ y: [0, 10, 0] }}
+            transition={{ repeat: Infinity, duration: 2 }}
+            className="w-6 h-10 border-2 border-gray-400 rounded-full flex justify-center"
+          >
+            <motion.div
+              animate={{ y: [0, 12, 0] }}
+              transition={{ repeat: Infinity, duration: 2 }}
+              className="w-1 h-3 bg-gray-400 rounded-full mt-2"
+            />
           </motion.div>
         </motion.div>
       </main>
+
+      {/* Quick Stats Section */}
+      <section className="py-20 px-4 relative">
+        <div className="absolute inset-0 bg-gradient-to-r from-blue-900/10 to-purple-900/10" />
+        <div className="container mx-auto max-w-6xl relative z-10">
+          <motion.div
+            initial={{ opacity: 0, y: 50 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8 }}
+            viewport={{ once: true }}
+            className="grid grid-cols-1 md:grid-cols-3 gap-8"
+          >
+            {[
+              { number: "2+", label: "Years Experience", icon: FaCode },
+              { number: "15+", label: "Projects Completed", icon: FaRocket },
+              { number: "100%", label: "Client Satisfaction", icon: FaLightbulb }
+            ].map((stat, index) => (
+              <motion.div
+                key={stat.label}
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ delay: index * 0.2, duration: 0.8 }}
+                viewport={{ once: true }}
+                className="retro-card text-center group"
+              >
+                <stat.icon className="text-4xl text-yellow-400 mx-auto mb-4 group-hover:scale-110 transition-transform" />
+                <div className="pixel-text text-4xl text-blue-400 mb-2">{stat.number}</div>
+                <div className="text-gray-300 font-medium">{stat.label}</div>
+              </motion.div>
+            ))}
+          </motion.div>
+        </div>
+      </section>
     </>
   );
 }

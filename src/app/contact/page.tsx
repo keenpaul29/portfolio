@@ -1,7 +1,7 @@
 'use client';
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { FaGithub, FaLinkedin, FaTwitter, FaEnvelope, FaCheckCircle, FaExclamationCircle } from 'react-icons/fa';
+import { FaGithub, FaLinkedin, FaTwitter, FaEnvelope, FaCheckCircle, FaExclamationCircle, FaPaperPlane, FaUser, FaPhone, FaMapMarkerAlt } from 'react-icons/fa';
 
 export default function Contact() {
   const [formData, setFormData] = useState({
@@ -34,14 +34,12 @@ export default function Contact() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
-    // Mark all fields as touched
     setTouched({
       name: true,
       email: true,
       message: true,
     });
 
-    // Validate form
     if (!formData.name || !formData.email || !formData.message || !isEmailValid(formData.email)) {
       setStatus('error');
       return;
@@ -61,7 +59,6 @@ export default function Contact() {
         setFormData({ name: '', email: '', message: '' });
         setTouched({ name: false, email: false, message: false });
         
-        // Reset success message after 5 seconds
         setTimeout(() => {
           setStatus('idle');
         }, 5000);
@@ -75,37 +72,70 @@ export default function Contact() {
   };
 
   const socialLinks = [
-    { icon: FaGithub, url: 'https://github.com/keenpaul29', label: 'GitHub' },
-    { icon: FaLinkedin, url: 'https://linkedin.com/in/yourprofile', label: 'LinkedIn' },
-    { icon: FaTwitter, url: 'https://twitter.com/yourhandle', label: 'Twitter' },
-    { icon: FaEnvelope, url: 'mailto:your.email@example.com', label: 'Email' },
+    { icon: FaGithub, url: 'https://github.com/keenpaul29', label: 'GitHub', color: '#333' },
+    { icon: FaLinkedin, url: 'https://linkedin.com/in/puspal-paul', label: 'LinkedIn', color: '#0077B5' },
+    { icon: FaTwitter, url: 'https://twitter.com/paul_puspal', label: 'Twitter', color: '#1DA1F2' },
+    { icon: FaEnvelope, url: 'mailto:puspalpaul8@gmail.com', label: 'Email', color: '#EA4335' },
+  ];
+
+  const contactInfo = [
+    { icon: FaUser, label: 'Name', value: 'Puspal Paul' },
+    { icon: FaEnvelope, label: 'Email', value: 'puspalpaul8@gmail.com' },
+    { icon: FaMapMarkerAlt, label: 'Location', value: 'Kolkata, India' },
+    { icon: FaPhone, label: 'Available', value: '24/7 for projects' },
   ];
 
   return (
-    <div className="min-h-screen pt-24 pb-12 px-4">
-      <div className="container mx-auto max-w-4xl">
+    <div className="min-h-screen pt-24 pb-12 px-4 relative overflow-hidden">
+      {/* Background */}
+      <div className="absolute inset-0 retro-grid opacity-20" />
+      <div className="absolute inset-0 bg-gradient-to-br from-blue-900/10 via-purple-900/10 to-yellow-900/10" />
+
+      <div className="container mx-auto max-w-6xl relative z-10">
+        {/* Header */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          className="text-center mb-16"
+          className="text-center mb-20"
         >
-          <h1 className="text-5xl font-bold gradient-text mb-6">Get in Touch</h1>
-          <p className="text-xl text-foreground/70">
-            Have a question or want to work together?
+          <motion.div
+            initial={{ opacity: 0, scale: 0.8 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ delay: 0.2 }}
+            className="inline-flex items-center gap-3 px-6 py-3 mb-8 glass-morphism rounded-full"
+          >
+            <FaPaperPlane className="text-2xl text-blue-400" />
+            <span className="pixel-text text-lg text-yellow-400">LET'S CONNECT</span>
+          </motion.div>
+          
+          <h1 className="section-title gradient-text mb-6">
+            GET IN TOUCH
+          </h1>
+          <p className="text-xl text-gray-300 max-w-3xl mx-auto">
+            Have a question or want to work together? I'd love to hear from you.
+            Let's create something amazing!
           </p>
         </motion.div>
 
-        <div className="grid md:grid-cols-2 gap-12">
+        <div className="grid lg:grid-cols-2 gap-12">
           {/* Contact Form */}
           <motion.div
             initial={{ opacity: 0, x: -20 }}
             animate={{ opacity: 1, x: 0 }}
-            className="glass-card p-8"
+            className="retro-card"
           >
+            <div className="flex items-center gap-4 mb-8">
+              <div className="w-12 h-12 rounded-2xl bg-gradient-to-r from-blue-400 to-purple-500 flex items-center justify-center">
+                <FaPaperPlane className="text-2xl text-white" />
+              </div>
+              <h2 className="pixel-text text-2xl text-blue-400">SEND MESSAGE</h2>
+            </div>
+
             <form onSubmit={handleSubmit} className="space-y-6">
+              {/* Name Field */}
               <div>
-                <label htmlFor="name" className="block text-sm font-medium mb-2">
-                  Name
+                <label htmlFor="name" className="block text-sm font-bold text-gray-300 mb-2 pixel-text">
+                  NAME *
                 </label>
                 <div className="relative">
                   <input
@@ -114,10 +144,12 @@ export default function Contact() {
                     value={formData.name}
                     onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                     onBlur={() => handleBlur('name')}
-                    className={`w-full px-4 py-2 rounded-lg bg-card-bg border transition-colors duration-200
-                      ${getFieldStatus('name') === 'error' ? 'border-red-500 focus:border-red-500 focus:ring-red-500' :
-                        getFieldStatus('name') === 'success' ? 'border-green-500 focus:border-green-500 focus:ring-green-500' :
-                        'border-card-border focus:border-primary focus:ring-primary'}`}
+                    className={`w-full px-4 py-3 rounded-2xl glass-morphism border-2 transition-all duration-300 focus:outline-none ${
+                      getFieldStatus('name') === 'error' ? 'border-red-500 focus:border-red-400' :
+                      getFieldStatus('name') === 'success' ? 'border-green-500 focus:border-green-400' :
+                      'border-transparent focus:border-blue-400'
+                    }`}
+                    placeholder="Your awesome name"
                     required
                   />
                   <AnimatePresence>
@@ -138,13 +170,14 @@ export default function Contact() {
                   </AnimatePresence>
                 </div>
                 {touched.name && !formData.name && (
-                  <p className="mt-1 text-sm text-red-500">Name is required</p>
+                  <p className="mt-2 text-sm text-red-400 pixel-text">NAME IS REQUIRED</p>
                 )}
               </div>
 
+              {/* Email Field */}
               <div>
-                <label htmlFor="email" className="block text-sm font-medium mb-2">
-                  Email
+                <label htmlFor="email" className="block text-sm font-bold text-gray-300 mb-2 pixel-text">
+                  EMAIL *
                 </label>
                 <div className="relative">
                   <input
@@ -153,10 +186,12 @@ export default function Contact() {
                     value={formData.email}
                     onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                     onBlur={() => handleBlur('email')}
-                    className={`w-full px-4 py-2 rounded-lg bg-card-bg border transition-colors duration-200
-                      ${getFieldStatus('email') === 'error' ? 'border-red-500 focus:border-red-500 focus:ring-red-500' :
-                        getFieldStatus('email') === 'success' ? 'border-green-500 focus:border-green-500 focus:ring-green-500' :
-                        'border-card-border focus:border-primary focus:ring-primary'}`}
+                    className={`w-full px-4 py-3 rounded-2xl glass-morphism border-2 transition-all duration-300 focus:outline-none ${
+                      getFieldStatus('email') === 'error' ? 'border-red-500 focus:border-red-400' :
+                      getFieldStatus('email') === 'success' ? 'border-green-500 focus:border-green-400' :
+                      'border-transparent focus:border-blue-400'
+                    }`}
+                    placeholder="your.email@example.com"
                     required
                   />
                   <AnimatePresence>
@@ -177,15 +212,16 @@ export default function Contact() {
                   </AnimatePresence>
                 </div>
                 {touched.email && (!formData.email || !isEmailValid(formData.email)) && (
-                  <p className="mt-1 text-sm text-red-500">
-                    {!formData.email ? 'Email is required' : 'Please enter a valid email address'}
+                  <p className="mt-2 text-sm text-red-400 pixel-text">
+                    {!formData.email ? 'EMAIL IS REQUIRED' : 'PLEASE ENTER A VALID EMAIL'}
                   </p>
                 )}
               </div>
 
+              {/* Message Field */}
               <div>
-                <label htmlFor="message" className="block text-sm font-medium mb-2">
-                  Message
+                <label htmlFor="message" className="block text-sm font-bold text-gray-300 mb-2 pixel-text">
+                  MESSAGE *
                 </label>
                 <div className="relative">
                   <textarea
@@ -193,11 +229,13 @@ export default function Contact() {
                     value={formData.message}
                     onChange={(e) => setFormData({ ...formData, message: e.target.value })}
                     onBlur={() => handleBlur('message')}
-                    rows={5}
-                    className={`w-full px-4 py-2 rounded-lg bg-card-bg border transition-colors duration-200
-                      ${getFieldStatus('message') === 'error' ? 'border-red-500 focus:border-red-500 focus:ring-red-500' :
-                        getFieldStatus('message') === 'success' ? 'border-green-500 focus:border-green-500 focus:ring-green-500' :
-                        'border-card-border focus:border-primary focus:ring-primary'}`}
+                    rows={6}
+                    className={`w-full px-4 py-3 rounded-2xl glass-morphism border-2 transition-all duration-300 focus:outline-none resize-none ${
+                      getFieldStatus('message') === 'error' ? 'border-red-500 focus:border-red-400' :
+                      getFieldStatus('message') === 'success' ? 'border-green-500 focus:border-green-400' :
+                      'border-transparent focus:border-blue-400'
+                    }`}
+                    placeholder="Tell me about your awesome project idea..."
                     required
                   />
                   <AnimatePresence>
@@ -218,17 +256,18 @@ export default function Contact() {
                   </AnimatePresence>
                 </div>
                 {touched.message && !formData.message && (
-                  <p className="mt-1 text-sm text-red-500">Message is required</p>
+                  <p className="mt-2 text-sm text-red-400 pixel-text">MESSAGE IS REQUIRED</p>
                 )}
               </div>
 
+              {/* Submit Button */}
               <motion.button
                 type="submit"
                 disabled={status === 'loading'}
                 className={`button-primary w-full relative overflow-hidden ${
                   status === 'loading' ? 'cursor-wait' : ''
                 }`}
-                whileTap={{ scale: 0.95 }}
+                whileTap={{ scale: 0.98 }}
               >
                 <AnimatePresence mode="wait">
                   {status === 'loading' ? (
@@ -237,34 +276,37 @@ export default function Contact() {
                       initial={{ opacity: 0 }}
                       animate={{ opacity: 1 }}
                       exit={{ opacity: 0 }}
-                      className="flex items-center justify-center"
+                      className="flex items-center justify-center gap-3"
                     >
                       <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin" />
-                      <span className="ml-2">Sending...</span>
+                      <span>SENDING...</span>
                     </motion.div>
                   ) : (
-                    <motion.span
+                    <motion.div
                       key="send"
                       initial={{ opacity: 0 }}
                       animate={{ opacity: 1 }}
                       exit={{ opacity: 0 }}
+                      className="flex items-center justify-center gap-3"
                     >
-                      Send Message
-                    </motion.span>
+                      <FaPaperPlane />
+                      <span>SEND MESSAGE</span>
+                    </motion.div>
                   )}
                 </AnimatePresence>
               </motion.button>
 
+              {/* Status Messages */}
               <AnimatePresence>
                 {status === 'success' && (
                   <motion.div
                     initial={{ opacity: 0, y: 10 }}
                     animate={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0, y: -10 }}
-                    className="flex items-center justify-center gap-2 text-green-500"
+                    className="flex items-center justify-center gap-3 p-4 bg-green-500/20 border border-green-500/30 rounded-2xl text-green-400"
                   >
                     <FaCheckCircle />
-                    <span>Message sent successfully!</span>
+                    <span className="pixel-text">MESSAGE SENT SUCCESSFULLY!</span>
                   </motion.div>
                 )}
                 {status === 'error' && (
@@ -272,38 +314,98 @@ export default function Contact() {
                     initial={{ opacity: 0, y: 10 }}
                     animate={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0, y: -10 }}
-                    className="flex items-center justify-center gap-2 text-red-500"
+                    className="flex items-center justify-center gap-3 p-4 bg-red-500/20 border border-red-500/30 rounded-2xl text-red-400"
                   >
                     <FaExclamationCircle />
-                    <span>Failed to send message. Please try again.</span>
+                    <span className="pixel-text">FAILED TO SEND. TRY AGAIN!</span>
                   </motion.div>
                 )}
               </AnimatePresence>
             </form>
           </motion.div>
 
-          {/* Social Links */}
+          {/* Contact Info & Social */}
           <motion.div
             initial={{ opacity: 0, x: 20 }}
             animate={{ opacity: 1, x: 0 }}
-            className="glass-card p-8"
+            className="space-y-8"
           >
-            <h2 className="text-2xl font-semibold mb-6">Connect With Me</h2>
-            <div className="space-y-6">
-              {socialLinks.map((link, index) => (
-                <motion.a
-                  key={index}
-                  href={link.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex items-center gap-4 p-4 rounded-lg hover:bg-primary/10 transition-colors"
-                  whileHover={{ scale: 1.02 }}
-                  whileTap={{ scale: 0.98 }}
-                >
-                  <link.icon className="text-2xl text-primary" />
-                  <span className="text-lg">{link.label}</span>
-                </motion.a>
-              ))}
+            {/* Contact Information */}
+            <div className="retro-card">
+              <div className="flex items-center gap-4 mb-8">
+                <div className="w-12 h-12 rounded-2xl bg-gradient-to-r from-green-400 to-blue-500 flex items-center justify-center">
+                  <FaUser className="text-2xl text-white" />
+                </div>
+                <h2 className="pixel-text text-2xl text-green-400">CONTACT INFO</h2>
+              </div>
+              
+              <div className="space-y-6">
+                {contactInfo.map((info, index) => (
+                  <motion.div
+                    key={info.label}
+                    initial={{ opacity: 0, x: 20 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ delay: index * 0.1 }}
+                    className="flex items-center gap-4 p-4 glass-morphism rounded-2xl hover:scale-105 transition-transform"
+                  >
+                    <div className="w-10 h-10 rounded-xl bg-gradient-to-r from-blue-400 to-purple-500 flex items-center justify-center">
+                      <info.icon className="text-white" />
+                    </div>
+                    <div>
+                      <p className="text-sm text-gray-400 pixel-text">{info.label}</p>
+                      <p className="text-white font-medium">{info.value}</p>
+                    </div>
+                  </motion.div>
+                ))}
+              </div>
+            </div>
+
+            {/* Social Media */}
+            <div className="retro-card">
+              <div className="flex items-center gap-4 mb-8">
+                <div className="w-12 h-12 rounded-2xl bg-gradient-to-r from-purple-400 to-pink-500 flex items-center justify-center">
+                  <FaEnvelope className="text-2xl text-white" />
+                </div>
+                <h2 className="pixel-text text-2xl text-purple-400">SOCIAL MEDIA</h2>
+              </div>
+              
+              <div className="grid grid-cols-2 gap-4">
+                {socialLinks.map((link, index) => (
+                  <motion.a
+                    key={index}
+                    href={link.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center gap-3 p-4 glass-morphism rounded-2xl hover:scale-105 transition-all group"
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: index * 0.1 }}
+                    whileHover={{ y: -2 }}
+                  >
+                    <link.icon 
+                      className="text-2xl group-hover:scale-110 transition-transform" 
+                      style={{ color: link.color }}
+                    />
+                    <span className="text-sm font-medium group-hover:text-white transition-colors">
+                      {link.label}
+                    </span>
+                  </motion.a>
+                ))}
+              </div>
+            </div>
+
+            {/* Quick Response */}
+            <div className="retro-card">
+              <div className="text-center">
+                <div className="w-16 h-16 mx-auto mb-4 rounded-2xl bg-gradient-to-r from-yellow-400 to-orange-500 flex items-center justify-center">
+                  <span className="text-2xl">⚡</span>
+                </div>
+                <h3 className="pixel-text text-xl text-yellow-400 mb-2">QUICK RESPONSE</h3>
+                <p className="text-gray-300 text-sm">
+                  I typically respond within 24 hours. For urgent matters, 
+                  feel free to reach out on LinkedIn!
+                </p>
+              </div>
             </div>
           </motion.div>
         </div>
