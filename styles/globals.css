@@ -40,21 +40,69 @@
 /* Reusable components */
 @layer components {
   .glass-morphism {
-    @apply bg-surface/60 dark:bg-surface/60 backdrop-blur-md border border-border shadow-sm;
+    /* Fallback to CSS vars to avoid Tailwind unknown class errors */
+    background-color: color-mix(in srgb, var(--surface) 60%, transparent);
+    backdrop-filter: blur(12px);
+    border: 1px solid var(--border);
+    box-shadow: 0 1px 2px rgba(0,0,0,0.05);
   }
 
   .button-base {
     @apply inline-flex items-center justify-center gap-2 rounded-lg px-5 py-3 font-medium transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/40 disabled:opacity-60 disabled:cursor-not-allowed;
   }
-  .button-primary { @apply button-base bg-primary text-primary-foreground hover:bg-primary/90; }
-  .button-secondary { @apply button-base bg-surface-2 text-foreground hover:bg-surface/80 border border-border; }
+  .button-primary { 
+    @apply button-base;
+    background-color: var(--primary);
+    color: var(--primary-foreground);
+  }
+  .button-primary:hover {
+    filter: brightness(0.95);
+  }
+  .button-secondary { 
+    @apply button-base;
+    background-color: var(--surface-2);
+    color: var(--foreground);
+    border: 1px solid var(--border);
+  }
+  .button-secondary:hover {
+    background-color: color-mix(in srgb, var(--surface) 80%, transparent);
+  }
 
   .social-link {
-    @apply inline-flex items-center justify-center rounded-lg p-2 bg-surface-2/60 hover:bg-surface/80 border border-border text-foreground/80 hover:text-foreground transition-colors;
+    @apply inline-flex items-center justify-center rounded-lg p-2 transition-colors;
+    background-color: color-mix(in srgb, var(--surface-2) 60%, transparent);
+    border: 1px solid var(--border);
+    color: color-mix(in srgb, var(--foreground) 80%, transparent);
+  }
+  .social-link:hover {
+    background-color: color-mix(in srgb, var(--surface) 80%, transparent);
+    color: var(--foreground);
   }
 
   .retro-card {
-    @apply rounded-2xl p-6 bg-surface/60 border border-border shadow-lg hover:shadow-xl transition-shadow;
+    @apply rounded-2xl p-6 hover:shadow-xl transition-shadow;
+    background-color: color-mix(in srgb, var(--surface) 60%, transparent);
+    border: 1px solid var(--border);
+    box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+  }
+
+  /* Animated aurora gradient overlay */
+  @keyframes auroraShift {
+    0% { transform: translate3d(-10%, -10%, 0) rotate(0deg) scale(1); }
+    50% { transform: translate3d(10%, 5%, 0) rotate(10deg) scale(1.05); }
+    100% { transform: translate3d(-10%, -10%, 0) rotate(0deg) scale(1); }
+  }
+  .aurora-overlay {
+    position: absolute;
+    inset: 0;
+    opacity: 0.35;
+    filter: blur(60px) saturate(1.15);
+    pointer-events: none;
+    background: radial-gradient(40% 35% at 20% 30%, rgba(59,130,246,0.45), transparent 60%),
+                radial-gradient(35% 30% at 80% 25%, rgba(168,85,247,0.45), transparent 60%),
+                radial-gradient(45% 40% at 50% 80%, rgba(14,165,233,0.45), transparent 60%);
+    animation: auroraShift 18s ease-in-out infinite;
+    mix-blend-mode: screen;
   }
 }
 
@@ -64,6 +112,18 @@
   .pixel-text { @apply tracking-wider font-semibold; }
   .pixel-text-3d {
     text-shadow: 0 1px 0 rgba(0,0,0,0.2), 0 2px 4px rgba(0,0,0,0.25);
+  }
+
+  /* Consistent large section headings without vertical clipping */
+  .section-title {
+    /* responsive sizes and generous line-height to avoid ascender/descender clipping */
+    @apply text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-extrabold leading-[1.15] tracking-tight py-1;
+  }
+
+  /* High-visibility gradient specifically for section headings */
+  .section-title-gradient {
+    /* vivid but readable on dark and light backgrounds */
+    @apply bg-clip-text text-transparent bg-gradient-to-r from-cyan-300 via-amber-300 to-orange-400;
   }
 
   /* Subtle retro grid background */

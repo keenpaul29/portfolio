@@ -2,7 +2,7 @@
 
 
 import { Geist, Geist_Mono } from "next/font/google";
-import "./globals.css";
+import "../../styles/globals.css";
 import Navbar from '../components/Navbar';
 import MouseTracker from '../components/MouseTracker';
 import { SpeedInsights } from '@vercel/speed-insights/next';
@@ -12,6 +12,8 @@ import { useTheme } from 'next-themes';
 import { ThemeProvider } from 'next-themes';
 import { Analytics } from '@vercel/analytics/next';
 import Script from 'next/script';
+import ThreeBackground from "../components/ThreeBackground";
+import PageTransition from "../components/PageTransition";
 
 // Move fonts outside the component since they need to be initialized at build time
 const geistSans = Geist({
@@ -67,6 +69,20 @@ function RootLayout({
       <body className="antialiased bg-background text-foreground relative min-h-screen flex flex-col">
         <ThemeProvider attribute="class" defaultTheme="dark" forcedTheme="dark">
           <MouseTracker />
+          {/* Site-wide Starry Night background (no cropping) */}
+          <div className="pointer-events-none fixed inset-0 -z-20">
+            <img
+              src="/starry-night.jpg"
+              alt="Starry Night background"
+              className="absolute inset-0 h-full w-full object-cover bg-black filter blur-[0.5px] md:blur-[1px]"
+            />
+          </div>
+          {/* Animated aurora gradient overlay (between painting and WebGL) */}
+          <div className="pointer-events-none fixed inset-0 z-[-15]">
+            <div className="aurora-overlay" />
+          </div>
+          {/* WebGL Background */}
+          <ThreeBackground />
           
           {/* Background noise effect */}
           <div className="pointer-events-none fixed inset-0 z-30 transition duration-300 lg:absolute" 
@@ -82,7 +98,9 @@ function RootLayout({
 
           {/* Main content */}
           <main className="relative z-10 flex-grow">
-            {children}
+            <PageTransition>
+              {children}
+            </PageTransition>
           </main>
 
           {/* Footer */}

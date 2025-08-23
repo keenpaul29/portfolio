@@ -108,10 +108,10 @@ export default function Contact() {
             <span className="pixel-text text-lg text-yellow-400">LET&apos;S CONNECT</span>
           </motion.div>
           
-          <h1 className="section-title gradient-text mb-6">
+          <h1 className="section-title section-title-gradient mb-6">
             GET IN TOUCH
           </h1>
-          <p className="text-xl text-gray-500 max-w-3xl mx-auto">
+          <p className="text-xl text-foreground/70 max-w-3xl mx-auto">
             Have a question or want to work together? I&apos;d love to hear from you.
             Let&apos;s create something amazing!
           </p>
@@ -134,7 +134,7 @@ export default function Contact() {
             <form onSubmit={handleSubmit} className="space-y-6">
               {/* Name Field */}
               <div>
-                <label htmlFor="name" className="block text-sm font-bold text-gray-300 mb-2 pixel-text">
+                <label htmlFor="name" className="block text-sm font-bold text-foreground/80 mb-2 pixel-text">
                   NAME *
                 </label>
                 <div className="relative">
@@ -176,7 +176,7 @@ export default function Contact() {
 
               {/* Email Field */}
               <div>
-                <label htmlFor="email" className="block text-sm font-bold text-gray-300 mb-2 pixel-text">
+                <label htmlFor="email" className="block text-sm font-bold text-foreground/80 mb-2 pixel-text">
                   EMAIL *
                 </label>
                 <div className="relative">
@@ -220,7 +220,7 @@ export default function Contact() {
 
               {/* Message Field */}
               <div>
-                <label htmlFor="message" className="block text-sm font-bold text-gray-300 mb-2 pixel-text">
+                <label htmlFor="message" className="block text-sm font-bold text-foreground/80 mb-2 pixel-text">
                   MESSAGE *
                 </label>
                 <div className="relative">
@@ -352,8 +352,8 @@ export default function Contact() {
                       <info.icon className="text-white" />
                     </div>
                     <div>
-                      <p className="text-sm text-gray-400 pixel-text">{info.label}</p>
-                      <p className="text-black font-medium">{info.value}</p>
+                      <p className="text-sm text-foreground/60 pixel-text">{info.label}</p>
+                      <p className="text-foreground font-medium">{info.value}</p>
                     </div>
                   </motion.div>
                 ))}
@@ -401,7 +401,7 @@ export default function Contact() {
                   <span className="text-2xl">⚡</span>
                 </div>
                 <h3 className="pixel-text text-xl text-yellow-400 mb-2">QUICK RESPONSE</h3>
-                <p className="text-gray-500 text-sm">
+                <p className="text-foreground/70 text-sm">
                   I typically respond within 24 hours. For urgent matters, 
                   feel free to reach out on LinkedIn!
                 </p>

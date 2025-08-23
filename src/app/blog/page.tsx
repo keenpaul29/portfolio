@@ -43,7 +43,7 @@ export default function Blog() {
           animate={{ opacity: 1, y: 0 }}
           className="text-center mb-16"
         >
-          <h1 className="text-5xl font-bold gradient-text mb-7">Blog</h1>
+          <h1 className="section-title section-title-gradient mb-7">Blog</h1>
           <p className="text-xl text-foreground/70">
             Thoughts, tutorials, and insights about web development
           </p>

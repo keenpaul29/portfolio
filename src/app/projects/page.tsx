@@ -4,6 +4,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { FaGithub, FaExternalLinkAlt, FaReact, FaNode, FaStripe, FaTimes, FaRocket, FaCode } from 'react-icons/fa';
 import { SiTypescript, SiMongodb, SiExpress, SiNextdotjs, SiTailwindcss, SiRazorpay, SiJavascript} from 'react-icons/si';
 import SkillIcon from '@/components/SkillIcon';
+import InteractiveCard from '@/components/InteractiveCard';
 
 interface Project {
   title: string;
@@ -235,10 +236,10 @@ const Projects = () => {
             <span className="pixel-text text-lg text-yellow-400">MY PORTFOLIO</span>
           </motion.div>
           
-          <h1 className="section-title gradient-text mb-6">
+          <h1 className="section-title section-title-gradient mb-6">
             FEATURED PROJECTS
           </h1>
-          <p className="text-xl text-gray-500 max-w-3xl mx-auto">
+          <p className="text-xl text-foreground/70 max-w-3xl mx-auto">
             Here are some of my recent projects showcasing my skills in full-stack development,
             UI/UX design, and problem-solving.
           </p>
@@ -258,7 +259,7 @@ const Projects = () => {
               className={`px-6 py-3 rounded-2xl font-bold transition-all duration-300 ${
                 filter === category
                   ? 'bg-gradient-to-r from-blue-400 to-purple-500 text-white'
-                  : 'glass-morphism text-gray-500 hover:text-white'
+                  : 'glass-morphism text-foreground/70 hover:text-white'
               }`}
             >
               {category}
@@ -267,18 +268,17 @@ const Projects = () => {
         </motion.div>
 
         {/* Featured Projects Grid */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-8 mb-20">
+        <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-8 mb-20 [perspective:1000px]">
           {filteredProjects.map((project, index) => (
-            <motion.div
+            <InteractiveCard
               key={project.title}
-              className={`retro-card group cursor-pointer ${
-                project.featured ? 'lg:col-span-1' : ''
-              }`}
+              className={`retro-card group cursor-pointer ${project.featured ? 'lg:col-span-1' : ''}`}
               onClick={() => setSelectedProject(project)}
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: index * 0.1, duration: 0.6 }}
               whileHover={{ y: -8, scale: 1.02 }}
+              intensity={8}
             >
               {/* Project Header */}
               <div className="flex items-start justify-between mb-4">
@@ -298,7 +298,7 @@ const Projects = () => {
               </div>
 
               {/* Description */}
-              <p className="text-gray-500 mb-6 line-clamp-3 leading-relaxed">
+              <p className="text-foreground/80 mb-6 line-clamp-3 leading-relaxed">
                 {project.description}
               </p>
 
@@ -339,7 +339,7 @@ const Projects = () => {
                     href={project.githubLink}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="flex-1 flex items-center justify-center gap-2 py-2 px-4 glass-morphism text-gray-300 rounded-xl font-medium hover:text-white hover:scale-105 transition-all"
+                    className="flex-1 flex items-center justify-center gap-2 py-2 px-4 glass-morphism text-foreground/80 rounded-xl font-medium hover:text-white hover:scale-105 transition-all"
                     onClick={(e) => e.stopPropagation()}
                   >
                     <FaGithub className="text-sm" />
@@ -347,7 +347,7 @@ const Projects = () => {
                   </a>
                 )}
               </div>
-            </motion.div>
+            </InteractiveCard>
           ))}
         </div>
 
@@ -361,7 +361,7 @@ const Projects = () => {
         >
           <div className="retro-card max-w-2xl mx-auto">
             <h3 className="pixel-text text-2xl text-yellow-400 mb-4">WANT TO SEE MORE?</h3>
-            <p className="text-gray-500 mb-8">
+            <p className="text-foreground/70 mb-8">
               Check out my GitHub for more projects and contributions to the open-source community.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">

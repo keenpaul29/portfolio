@@ -55,7 +55,7 @@ export default function Navbar() {
         transition={{ duration: 0.6, ease: "easeOut" }}
         className={`fixed w-full z-50 transition-all duration-300 ${
           scrolled 
-            ? 'glass-morphism backdrop-blur-xl border-b border-white/10' 
+            ? 'glass-morphism backdrop-blur-xl' 
             : 'bg-transparent'
         }`}
       >
@@ -66,7 +66,7 @@ export default function Navbar() {
               href="/" 
               className="pixel-text text-2xl sm:text-3xl gradient-text hover:scale-105 transition-transform"
             >
-              keenpaul29.me
+              keenpaul29
             </Link>
 
             {/* Desktop Menu */}

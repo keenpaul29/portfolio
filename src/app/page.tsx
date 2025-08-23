@@ -2,19 +2,26 @@
 import React, { useEffect, useRef, useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
-import { motion } from 'framer-motion';
+import { motion, useScroll, useTransform } from 'framer-motion';
 import { FaGithub, FaLinkedin, FaEnvelope, FaDownload, FaCode, FaRocket, FaLightbulb } from 'react-icons/fa';
 import SkillIcon from '@/components/SkillIcon';
 import { mouseMoveEvent, mouseEnterEvent, mouseLeaveEvent } from './mouseTracker';
 import StructuredData from '@/components/StructuredData';
+import dynamic from 'next/dynamic';
+
+const HeroCanvas = dynamic(() => import('@/components/HeroCanvas'), {
+  ssr: false,
+  loading: () => <div className="w-full h-full" />,
+});
 
 export default function Home() {
   const cursorRef = useRef<HTMLDivElement>(null);
   const cursorAuraRef = useRef<HTMLDivElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
+  const { scrollYProgress } = useScroll({ target: containerRef, offset: ["start start", "end start"] });
+  const yHero = useTransform(scrollYProgress, [0, 1], [0, -120]);
   const [skillIcons, setSkillIcons] = useState<{ src: string; name: string }[]>([]);
   const [iconPositions, setIconPositions] = useState<Array<{ top: string; left: string }>>([]);
-
 
   const personData = {
     name: 'Puspal',
@@ -323,31 +330,22 @@ export default function Home() {
               </motion.div>
             </motion.div>
 
-            {/* Right: Hero Image with Chessboard (refined) */}
+            {/* Right: WebGL Hero (Three.js) */}
             <motion.div
               initial={{ opacity: 0, x: 40 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ delay: 0.6, duration: 0.8 }}
-              className="relative z-10 w-full h-[360px] sm:h-[420px] md:h-[480px] lg:h-[520px] rounded-3xl overflow-hidden shadow-2xl ring-1 ring-white/10 bg-[#081F26] backdrop-blur-lg"
+              className="relative z-10 w-full h-[400px] sm:h-[500px] md:h-[620px] lg:h-[720px] xl:h-[800px] rounded-3xl overflow-hidden shadow-2xl ring-1 ring-white/10 bg-[#081F26]/80 backdrop-blur-lg"
+              style={{ y: yHero }}
             >
               {/* subtle gradient overlay to blend with page bg */}
               <div className="absolute inset-0 bg-gradient-to-br from-blue-900/40 via-purple-900/30 to-transparent mix-blend-soft-light" />
+              {/* WebGL Canvas */}
+              <HeroCanvas />
               {/* vignette for focus */}
               <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(0,0,0,0.18)_0%,rgba(0,0,0,0.0)_65%)]" />
-
-              {/* image */}
-              <div className="absolute inset-0 flex items-center justify-center p-6">
-                <div className="relative w-full h-full rounded-2xl ring-1 ring-white/10 bg-white/0 overflow-hidden">
-                  <Image
-                    src="/hero.png"
-                    alt="Puspal hero"
-                    fill
-                    priority
-                    className="object-contain drop-shadow-xl"
-                  />
-                </div>
-              </div>
             </motion.div>
+
             {/* Full-width CTA Row below hero */}
             <div className="lg:col-span-2 relative z-20 mt-8 mb-3">
               <div className="flex flex-row md:flex-nowrap flex-wrap gap-6 justify-center items-center">

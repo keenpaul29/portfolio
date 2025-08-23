@@ -139,7 +139,7 @@ export default function About() {
             <span className="pixel-text text-lg text-yellow-400">TABLE OF CONTENTS</span>
           </motion.div>
           
-          <h1 className="section-title gradient-text">
+          <h1 className="section-title section-title-gradient">
             ABOUT ME
           </h1>
           <p className="flex items-center justify-center gap-2 text-base sm:text-lg md:text-xl text-foreground/60 max-w-3xl mx-auto">
@@ -157,7 +157,7 @@ export default function About() {
               </div>
               <h2 className="pixel-text text-3xl text-blue-400">HELLO</h2>
             </div>
-            <div className="text-lg leading-relaxed text-gray-500 space-y-4">
+            <div className="text-lg leading-relaxed text-foreground/80 space-y-4">
               <p>
                 Hope you enjoy my work! I am a passionate <span className="text-yellow-400 font-bold">Full Stack Developer</span> based in 
                 <span className="text-blue-400 font-bold"> Kolkata, India</span>, and have completed B.Tech in Computer Science and Engineering.
@@ -258,14 +258,14 @@ export default function About() {
                         <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-yellow-400 opacity-75"></span>
                         <span className="relative inline-flex w-3 h-3 bg-yellow-400 rounded-full"></span>
                       </span>
-                      <span className="text-sm text-gray-500">2021–2025</span>
+                      <span className="text-sm text-foreground/70">2021–2025</span>
                     </div>
-                    <span className="text-xs sm:text-sm text-gray-500">Berhampore, India</span>
+                    <span className="text-xs sm:text-sm text-foreground/70">Berhampore, India</span>
                   </div>
                   <h3 className="text-xl font-bold text-yellow-600 mb-2">
                     B.Tech in Computer Science and Engineering
                   </h3>
-                  <p className="text-gray-500">
+                  <p className="text-foreground/70">
                     Government College of Engineering and Textile Technology, Berhampore
                   </p>
                 </motion.div>
@@ -284,12 +284,12 @@ export default function About() {
                         <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-yellow-400 opacity-75"></span>
                         <span className="relative inline-flex w-3 h-3 bg-yellow-400 rounded-full"></span>
                       </span>
-                      <span className="text-sm text-gray-500">2021</span>
+                      <span className="text-sm text-foreground/70">2021</span>
                     </div>
-                    <span className="text-xs sm:text-sm text-gray-500">Barrackpore, West Bengal, India</span>
+                    <span className="text-xs sm:text-sm text-foreground/70">Barrackpore, West Bengal, India</span>
                   </div>
                   <h3 className="text-xl font-bold text-yellow-600 mb-1">All India Secondary School Certificate Examination (12th), CBSE</h3>
-                  <p className="italic text-gray-500 mb-2">Kendriya Vidyalaya Barrackpore (Army)</p>
+                  <p className="italic text-foreground/70 mb-2">Kendriya Vidyalaya Barrackpore (Army)</p>
                 </motion.div>
 
                 {/* AISSE (10th) */}
@@ -306,12 +306,12 @@ export default function About() {
                         <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-yellow-400 opacity-75"></span>
                         <span className="relative inline-flex w-3 h-3 bg-yellow-400 rounded-full"></span>
                       </span>
-                      <span className="text-sm text-gray-500">2019</span>
+                      <span className="text-sm text-foreground/70">2019</span>
                     </div>
-                    <span className="text-xs sm:text-sm text-gray-500">Barrackpore, India</span>
+                    <span className="text-xs sm:text-sm text-foreground/70">Barrackpore, India</span>
                   </div>
                   <h3 className="text-xl font-bold text-yellow-600 mb-1">All India Senior Secondary Examination (10th), CBSE</h3>
-                  <p className="italic text-gray-500 mb-2">Kendriya Vidyalaya Barrackpore (Army)</p>
+                  <p className="italic text-foreground/70 mb-2">Kendriya Vidyalaya Barrackpore (Army)</p>
                 </motion.div>
               </div>
             </motion.section>
@@ -331,13 +331,13 @@ export default function About() {
                   <div className="flex items-center justify-between mb-2">
                     <div className="flex items-center gap-2">
                       <span className="w-3 h-3 bg-purple-400 rounded-full"></span>
-                      <span className="text-sm text-gray-500">Jul 2025 — Present</span>
+                      <span className="text-sm text-foreground/70">Jul 2025 — Present</span>
                     </div>
-                    <span className="text-sm text-gray-500">India</span>
+                    <span className="text-sm text-foreground/70">India</span>
                   </div>
                   <h3 className="text-xl font-bold text-purple-600 mb-1">Full Stack Developer Intern</h3>
-                  <p className="italic text-gray-500 mb-3">YoForex Corp</p>
-                  <ul className="text-sm text-gray-600 space-y-1">
+                  <p className="italic text-foreground/70 mb-3">YoForex Corp</p>
+                  <ul className="text-sm text-foreground/70 space-y-1">
                     <li>• Engineered AI-powered trading platform serving <span className="font-semibold">15,000+ users</span>, increasing engagement by <span className="font-semibold">40%</span></li>
                     <li>• Reduced API latency by <span className="font-semibold">35%</span> by optimizing backend services (TypeScript/Python) and implementing caching</li>
                     <li>• Developed responsive UI with Next.js & Tailwind, improving mobile conversion by <span className="font-semibold">25%</span></li>
@@ -350,13 +350,13 @@ export default function About() {
                   <div className="flex items-center justify-between mb-2">
                     <div className="flex items-center gap-2">
                       <span className="w-3 h-3 bg-purple-400 rounded-full"></span>
-                      <span className="text-sm text-gray-500">Dec 2024 — May 2025</span>
+                      <span className="text-sm text-foreground/70">Dec 2024 — May 2025</span>
                     </div>
-                    <span className="text-sm text-gray-500">Remote</span>
+                    <span className="text-sm text-foreground/70">Remote</span>
                   </div>
                   <h3 className="text-xl font-bold text-purple-600 mb-1">Full Stack Engineering Intern</h3>
-                  <p className="italic text-gray-500 mb-3">Hubnex Labs</p>
-                  <ul className="text-sm text-gray-600 space-y-1">
+                  <p className="italic text-foreground/70 mb-3">Hubnex Labs</p>
+                  <ul className="text-sm text-foreground/70 space-y-1">
                     <li>• Built MERN stack web apps handling <span className="font-semibold">10k+ MAU</span> with <span className="font-semibold">30+ RESTful APIs</span> and responsive, user-friendly UI</li>
                     <li>• Enhanced security with JWT authentication and Redux state management, boosting retention by <span className="font-semibold">25%</span></li>
                     <li>• Optimized web performance achieving <span className="font-semibold">40%</span> faster load times and <span className="font-semibold">98%</span> device compatibility</li>
@@ -387,7 +387,7 @@ export default function About() {
                   <div className={`pixel-text text-4xl mb-2 ${stat.color} group-hover:scale-110 transition-transform`}>
                     {stat.number}
                   </div>
-                  <div className="text-gray-600 text-sm">{stat.label}</div>
+                  <div className="text-foreground/70 text-sm">{stat.label}</div>
                 </motion.div>
               ))}
             </div>
@@ -400,7 +400,7 @@ export default function About() {
           >
             <div className="retro-card max-w-2xl mx-auto">
               <h3 className="pixel-text text-2xl text-yellow-400 mb-4">LET&apos;S BUILD SOMETHING AMAZING!</h3>
-              <p className="text-gray-500 mb-8">
+              <p className="text-foreground/70 mb-8">
                 Ready to bring your ideas to life? Let&apos;s collaborate and create something extraordinary together.
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
