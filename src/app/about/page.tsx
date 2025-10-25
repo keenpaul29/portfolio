@@ -155,9 +155,9 @@ export default function About() {
               <div className="w-12 h-12 rounded-2xl bg-gradient-to-r from-blue-400 to-purple-500 flex items-center justify-center">
                 <FaLightbulb className="text-2xl text-white" />
               </div>
-              <h2 className="pixel-text text-3xl text-blue-400">HELLO</h2>
+              <h2 className="pixel-text text-3xl text-blue-400">HELLO !</h2>
             </div>
-            <div className="text-lg leading-relaxed text-foreground/80 space-y-4">
+            <div className="text-lg leading-relaxed text-foreground/80 space-y-4 tracking-wider">
               <p>
                 Hope you enjoy my work! I am a passionate <span className="text-yellow-400 font-bold">Full Stack Developer</span> based in 
                 <span className="text-blue-400 font-bold"> Kolkata, India</span>, and have completed B.Tech in Computer Science and Engineering.
@@ -211,7 +211,7 @@ export default function About() {
                         )}
                     </div>
                     <div>
-                      <h3 className="font-bold text-green-600">{skill.name}</h3>
+                      <h3 className="font-bold text-xl text-green-600 tracking-wider">{skill.name}</h3>
                       
                     </div>
                   </div>
@@ -399,16 +399,16 @@ export default function About() {
             className="text-center"
           >
             <div className="retro-card max-w-2xl mx-auto">
-              <h3 className="pixel-text text-2xl text-yellow-400 mb-4">LET&apos;S BUILD SOMETHING AMAZING!</h3>
+              <h3 className="pixel-text text-2xl text-yellow-400 mb-4 tracking-widest">LET&apos;S BUILD SOMETHING AMAZING!</h3>
               <p className="text-foreground/70 mb-8">
                 Ready to bring your ideas to life? Let&apos;s collaborate and create something extraordinary together.
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                <Link href="/projects" className="button-primary">
+                <Link href="/projects" className="button-primary text-gray-800 tracking-wide">
                   VIEW MY WORK
                   <span className="ml-2">→</span>
                 </Link>
-                <Link href="/contact" className="button-secondary">
+                <Link href="/contact" className="button-secondary tracking-wide">
                   GET IN TOUCH
                 </Link>
               </div>

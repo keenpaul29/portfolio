@@ -2,6 +2,7 @@
 
 
 import { Geist, Geist_Mono } from "next/font/google";
+import localFont from "next/font/local";
 import "../../styles/globals.css";
 import Navbar from '../components/Navbar';
 import MouseTracker from '../components/MouseTracker';
@@ -12,7 +13,7 @@ import { useTheme } from 'next-themes';
 import { ThemeProvider } from 'next-themes';
 import { Analytics } from '@vercel/analytics/next';
 import Script from 'next/script';
-import ThreeBackground from "../components/ThreeBackground";
+// import ThreeBackground from "../components/ThreeBackground";
 import PageTransition from "../components/PageTransition";
 import Image from 'next/image';
 
@@ -29,6 +30,12 @@ const geistMono = Geist_Mono({
   display: "swap",
 });
 
+const eternalBloom = localFont({
+  src: '../../styles/fonts/Eternal Bloom.otf',
+  variable: '--font-eternal-bloom',
+  display: 'swap',
+});
+
 
 
 function RootLayout({
@@ -39,9 +46,9 @@ function RootLayout({
   const { theme } = useTheme();
 
   return (
-    <html 
-      lang="en" 
-      className={`dark ${geistSans.variable} ${geistMono.variable} scroll-smooth`}
+    <html
+      lang="en"
+      className={`dark ${geistSans.variable} ${geistMono.variable} ${eternalBloom.variable} scroll-smooth`}
       suppressHydrationWarning
     >
       <head>
@@ -84,7 +91,7 @@ function RootLayout({
             <div className="aurora-overlay" />
           </div>
           {/* WebGL Background */}
-          <ThreeBackground />
+          
           
           {/* Background noise effect */}
           <div className="pointer-events-none fixed inset-0 z-30 transition duration-300 lg:absolute" 

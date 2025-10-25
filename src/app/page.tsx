@@ -6,13 +6,8 @@ import { FaGithub, FaLinkedin, FaEnvelope, FaDownload, FaCode, FaRocket, FaLight
 import SkillIcon from '@/components/SkillIcon';
 import { mouseMoveEvent, mouseEnterEvent, mouseLeaveEvent } from './mouseTracker';
 import StructuredData from '@/components/StructuredData';
-import dynamic from 'next/dynamic';
-
-const HeroCanvas = dynamic(() => import('@/components/HeroCanvas'), {
-  ssr: false,
-  loading: () => <div className="w-full h-full" />,
-});
-
+import Image from 'next/image';
+import { RxFontFamily } from 'react-icons/rx';
 export default function Home() {
   const cursorRef = useRef<HTMLDivElement>(null);
   const cursorAuraRef = useRef<HTMLDivElement>(null);
@@ -197,31 +192,11 @@ export default function Home() {
       <main ref={containerRef} className="relative min-h-screen overflow-hidden">
         {/* Animated Background */}
         <div className="absolute inset-0 retro-grid opacity-30" />
-        <div className="absolute inset-0 bg-gradient-to-br from-blue-900/20 via-purple-900/20 to-yellow-900/20" />
-        
-        {/* Floating Elements */}
-        <div className="absolute inset-0 overflow-hidden pointer-events-none">
-          <FloatingElement delay={0.2} className="absolute top-20 left-10 w-16 h-16 bg-gradient-to-r from-blue-400 to-purple-500 rounded-2xl opacity-20" />
-          <FloatingElement delay={0.4} className="absolute top-40 right-20 w-12 h-12 bg-gradient-to-r from-yellow-400 to-orange-500 rounded-full opacity-30" />
-          <FloatingElement delay={0.6} className="absolute bottom-40 left-20 w-20 h-20 bg-gradient-to-r from-green-400 to-blue-500 rounded-3xl opacity-25" />
-          <FloatingElement delay={0.8} className="absolute bottom-20 right-10 w-14 h-14 bg-gradient-to-r from-pink-400 to-red-500 rounded-2xl opacity-20" />
-          
-          {/* Skills from public/skills floating in safe zones (behind content) */}
-          {iconPositions.map((pos, index) => (
-            <FloatingElement
-              key={`${skillIcons[index]?.name ?? 'icon'}-${index}`}
-              delay={1 + index * 0.08}
-              className="absolute opacity-20 hidden md:block"
-              style={pos}
-            >
-              <SkillIcon src={skillIcons[index]?.src ?? ''} name={skillIcons[index]?.name ?? ''} size={36} />
-            </FloatingElement>
-          ))}
-        </div>
 
-        {/* Main Content */}
-        <div className="relative z-10 flex items-center justify-center min-h-screen px-4 py-20 pb-28">
-          <div className="max-w-6xl w-full grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+        {/* Main Content with Glassmorphism */}
+        <div className="relative z-10 flex items-center justify-center min-h-screen py-20 pb-28 px-4 pl-24">
+          <div className="glass-morphism rounded-3xl p-8 max-w-7xl w-full">
+          <div className="max-w-6xl  w-full grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             {/* Left: Text Content */}
             <motion.div
               initial={{ opacity: 0, y: 50 }}
@@ -237,7 +212,7 @@ export default function Home() {
                 className="inline-flex items-center gap-3 px-6 py-3 mb-8 glass-morphism rounded-full"
               >
                 <span className="text-2xl">👋</span>
-                <TypingText className="text-2xl text-yellow-600" text="<> Hello World! </>" speed={70} />
+                <TypingText className="text-2xl" text="<> Hello World! </>" speed={60} />
               </motion.div>
 
               {/* Main Title */}
@@ -246,7 +221,7 @@ export default function Home() {
                   initial={{ opacity: 0, y: 30 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.4, duration: 0.8 }}
-                  className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-300 via-yellow-300 to-orange-300 text-6xl sm:text-7xl md:text-8xl lg:text-9xl mb-4 font-extrabold tracking-tight drop-shadow-[0_4px_12px_rgba(0,0,0,0.35)]"
+                  className="text-6xl sm:text-7xl md:text-8xl lg:text-9xl mb-4 font-normal tracking-wider text-[#DFE386]"
                 >
                   PUSPAL
                 </motion.h1>
@@ -255,7 +230,7 @@ export default function Home() {
                   initial={{ opacity: 0, x: -30 }}
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ delay: 0.6, duration: 0.8 }}
-                  className="pixel-text text-2xl sm:text-3xl md:text-4xl text-blue-200 mb-6"
+                  className="simple-text text-2xl sm:text-3xl md:text-4xl mb-6 tracking-wide"
                 >
                   FULL STACK DEVELOPER
                 </motion.div>
@@ -266,11 +241,9 @@ export default function Home() {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.8, duration: 0.8 }}
-                className="text-xl sm:text-2xl text-foreground/80 mb-12 max-w-3xl lg:max-w-none mx-auto lg:mx-0 leading-relaxed"
+                className="text-xl sm:text-2xl text-foreground/80 mb-12 max-w-3xl lg:max-w-none mx-auto lg:mx-0 leading-relaxed tracking-wide"
               >
-                Crafting digital experiences with <span className="pixel-text text-yellow-500 font-bold">4+ years</span> of expertise in 
-                <span className=" text-blue-400 font-bold"> modern web technologies</span>. 
-                Passionate about building scalable solutions that make a difference.
+                Crafting digital experiences with 4+ years of expertise in modern web technologies. Passionate about building scalable solutions that make a difference.
               </motion.p>
 
               {/* Tech Stack Pills */}
@@ -329,34 +302,34 @@ export default function Home() {
               </motion.div>
             </motion.div>
 
-            {/* Right: WebGL Hero (Three.js) */}
+            {/* Right: Simple Hero Visual */}
             <motion.div
               initial={{ opacity: 0, x: 40 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ delay: 0.6, duration: 0.8 }}
-              className="relative z-10 w-full h-[400px] sm:h-[500px] md:h-[620px] lg:h-[720px] xl:h-[800px] rounded-3xl overflow-hidden shadow-2xl ring-1 ring-white/10 bg-[#081F26]/80 backdrop-blur-lg"
-              style={{ y: yHero }}
+              className="relative z-10 w-full flex items-center justify-center"
             >
-              {/* subtle gradient overlay to blend with page bg */}
-              <div className="absolute inset-0 bg-gradient-to-br from-blue-900/40 via-purple-900/30 to-transparent mix-blend-soft-light" />
-              {/* WebGL Canvas */}
-              <HeroCanvas />
-              {/* vignette for focus */}
-              <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(0,0,0,0.18)_0%,rgba(0,0,0,0.0)_65%)]" />
+              <div className="relative w-full max-w-lg min-h-20">
+                {/* Main visual container */}
+                <div className="relative aspect-square rounded-3xl overflow-hidden">
+                  {/* Central content */}
+                  <img src="/hero.png" alt='Hero Image' className="w-[2000px] h-auto"/>
+                </div>
+              </div>
             </motion.div>
 
             {/* Full-width CTA Row below hero */}
             <div className="lg:col-span-2 relative z-20 mt-8 mb-3">
               <div className="flex flex-row md:flex-nowrap flex-wrap gap-6 justify-center items-center">
                 <Link href="/projects" className="button-primary group flex items-center justify-center gap-3 min-w-[220px] shrink-0">
-                  <FaRocket className="text-xl text-white group-hover:animate-bounce" />
-                  <span className="uppercase tracking-wide whitespace-nowrap leading-none text-white">VIEW PROJECTS</span>
-                  <motion.span animate={{ x: [0, 5, 0] }} transition={{ repeat: Infinity, duration: 1.5 }}>→</motion.span>
+                  <FaRocket className="text-xl text-gray-500 group-hover:animate-bounce" />
+                  <span className="uppercase tracking-wide whitespace-nowrap leading-none text-gray-800">VIEW PROJECTS</span>
+                  <motion.span className="text-gray-800" animate={{ x: [0, 5, 0] }} transition={{ repeat: Infinity, duration: 1.5 }}>→</motion.span>
                 </Link>
 
                 <Link href="/contact" className="button-secondary group flex items-center justify-center gap-3 min-w-[220px] shrink-0">
                   <FaLightbulb className="text-xl text-foreground/90 group-hover:text-white group-hover:animate-pulse" />
-                  <span className="uppercase tracking-wide whitespace-nowrap leading-none">LET&apos;S COLLABORATE</span>
+                  <span className="uppercase tracking-wide whitespace-nowrap leading-none">LET'S COLLABORATE</span>
                 </Link>
 
                 <a
@@ -372,6 +345,7 @@ export default function Home() {
               </div>
             </div>
           </div>
+          </div>
         </div>
 
         {/* Scroll Indicator */}
@@ -381,7 +355,7 @@ export default function Home() {
           transition={{ delay: 2, duration: 1 }}
           className="absolute bottom-8 left-1/2 transform -translate-x-1/2 flex flex-col items-center gap-2 text-foreground/60 pointer-events-none"
         >
-          <span className="text-sm pixel-text">SCROLL DOWN</span>
+          <span className="text-sm simple-text">SCROLL DOWN</span>
           <motion.div
             animate={{ y: [0, 10, 0] }}
             transition={{ repeat: Infinity, duration: 2 }}
@@ -420,8 +394,8 @@ export default function Home() {
                 viewport={{ once: true }}
                 className="retro-card text-center group"
               >
-                <stat.icon className="text-4xl text-yellow-400 mx-auto mb-4 group-hover:scale-110 transition-transform" />
-                <div className="pixel-text text-4xl text-blue-400 mb-2">{stat.number}</div>
+                <stat.icon className="text-4xl mx-auto mb-4 group-hover:scale-110 transition-transform" />
+                <div className="simple-text text-4xl mb-2">{stat.number}</div>
                 <div className="text-foreground/70 font-medium">{stat.label}</div>
               </motion.div>
             ))}
