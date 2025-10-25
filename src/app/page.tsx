@@ -256,7 +256,7 @@ export default function Home() {
                   initial={{ opacity: 0, x: -30 }}
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ delay: 0.6, duration: 0.8 }}
-                  className="pixel-text text-2xl sm:text-3xl md:text-4xl text-blue-400 mb-6"
+                  className="pixel-text text-2xl sm:text-3xl md:text-4xl text-blue-200 mb-6"
                 >
                   FULL STACK DEVELOPER
                 </motion.div>
