@@ -8,14 +8,13 @@ import { useScene } from "@/state/useScene";
 
 interface Props {
   id: string;
-  title: string;
   image: string;
   onOpen?: (id: string) => void;
   position?: [number, number, number];
   rotation?: [number, number, number];
 }
 
-export default function Frame({ id, title, image, onOpen, ...props }: Props) {
+export default function Frame({ id, image, onOpen, ...props }: Props) {
   const map = useLoader(TextureLoader, image);
   const [hovered, setHovered] = useState(false);
   useCursor(hovered);

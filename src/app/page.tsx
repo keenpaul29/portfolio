@@ -1,7 +1,6 @@
 'use client';
 import React, { useEffect, useRef, useState } from 'react';
 import Link from 'next/link';
-import Image from 'next/image';
 import { motion, useScroll, useTransform } from 'framer-motion';
 import { FaGithub, FaLinkedin, FaEnvelope, FaDownload, FaCode, FaRocket, FaLightbulb } from 'react-icons/fa';
 import SkillIcon from '@/components/SkillIcon';

@@ -2,7 +2,7 @@
 
 import React, { useEffect, useRef, useState } from "react";
 import { useFrame, useThree, type RootState } from "@react-three/fiber";
-import { Float, ContactShadows, MeshReflectorMaterial, Sparkles, CameraShake, useScroll, Environment, MeshTransmissionMaterial, useGLTF, Bounds, Center } from "@react-three/drei";
+import { Float, ContactShadows, MeshReflectorMaterial, Sparkles, CameraShake, Environment, MeshTransmissionMaterial, useGLTF, Bounds, Center } from "@react-three/drei";
 import type { Group, Mesh } from "three";
 import { ThreeStage } from "./ThreeStage";
 
@@ -68,19 +68,9 @@ function Orbiters() {
 
 function Scene({ hovered = false }: { hovered?: boolean }) {
   const group = useRef<Group>(null!);
-  const light = useRef<Mesh>(null!);
   const { camera } = useThree();
-  // ScrollControls are disabled; useScroll() will be undefined. Guard it.
-  let scroll: ReturnType<typeof useScroll> | null = null;
-  try {
-    scroll = useScroll();
-  } catch {}
-  // Try load Thinker model
-  let thinker: any = null;
-  try {
-    // uploaded at /public/the_thinker_by_auguste_rodin.glb
-    thinker = useGLTF("/the_thinker_by_auguste_rodin.glb");
-  } catch {}
+  // Load Thinker model
+  const thinker = useGLTF("/the_thinker_by_auguste_rodin.glb");
   // Subtle camera drift + parallax on group
   useFrame((state: RootState) => {
     if (!group.current) return;
@@ -97,7 +87,7 @@ function Scene({ hovered = false }: { hovered?: boolean }) {
     group.current.position.y = Math.sin(t * 0.6) * 0.05;
 
     // Parallax camera drift (subtle) and hover zoom-out to reveal full model
-    const s = scroll?.offset ?? 0; // 0..1
+    const s = 0; // 0..1, scroll disabled
     const baseZ = 3.2 - s * 0.8; // move camera closer on scroll
     const baseY = 1.5 + s * 0.4; // slight vertical travel
     const targetZ = hovered ? baseZ + 0.8 : baseZ; // zoom out a bit on hover

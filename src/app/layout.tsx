@@ -14,6 +14,7 @@ import { Analytics } from '@vercel/analytics/next';
 import Script from 'next/script';
 import ThreeBackground from "../components/ThreeBackground";
 import PageTransition from "../components/PageTransition";
+import Image from 'next/image';
 
 // Move fonts outside the component since they need to be initialized at build time
 const geistSans = Geist({
@@ -71,10 +72,11 @@ function RootLayout({
           <MouseTracker />
           {/* Site-wide Starry Night background (no cropping) */}
           <div className="pointer-events-none fixed inset-0 -z-20">
-            <img
+            <Image
+              fill
               src="/starry-night.jpg"
               alt="Starry Night background"
-              className="absolute inset-0 h-full w-full object-cover bg-black filter blur-[0.5px] md:blur-[1px]"
+              className="object-cover bg-black filter blur-[0.5px] md:blur-[1px]"
             />
           </div>
           {/* Animated aurora gradient overlay (between painting and WebGL) */}
