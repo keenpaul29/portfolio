@@ -194,7 +194,7 @@ export default function Home() {
         <div className="absolute inset-0 retro-grid opacity-30" />
 
         {/* Main Content with Glassmorphism */}
-        <div className="relative z-10 flex items-center justify-center min-h-screen py-20 pb-28 px-4 pl-24">
+        <div className="relative z-10 flex items-center justify-center min-h-screen py-20 pb-28 px-4 pl-">
           <div className="glass-morphism rounded-3xl p-8 max-w-7xl w-full">
           <div className="max-w-6xl  w-full grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             {/* Left: Text Content */}
