@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { useTheme } from 'next-themes';
 import { motion, AnimatePresence } from 'framer-motion';
 import { FiSun, FiMoon } from 'react-icons/fi';
@@ -18,15 +18,10 @@ const themes = [
 ];
 
 export default function ThemeSwitcher() {
-  const [mounted, setMounted] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
   const { theme, setTheme } = useTheme();
 
-  useEffect(() => {
-    setMounted(true);
-  }, []);
-
-  if (!mounted) {
+  if (!useState(true)[0]) {
     return null;
   }
 

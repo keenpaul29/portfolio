@@ -1,21 +1,18 @@
 'use client';
 import React, { useEffect, useRef, useState } from 'react';
 import Link from 'next/link';
-import { motion, useScroll, useTransform } from 'framer-motion';
+import { motion } from 'framer-motion';
 import { FaGithub, FaLinkedin, FaEnvelope, FaDownload, FaCode, FaRocket, FaLightbulb } from 'react-icons/fa';
 import SkillIcon from '@/components/SkillIcon';
 import { mouseMoveEvent, mouseEnterEvent, mouseLeaveEvent } from './mouseTracker';
 import StructuredData from '@/components/StructuredData';
 import Image from 'next/image';
-import { RxFontFamily } from 'react-icons/rx';
+
+
 export default function Home() {
   const cursorRef = useRef<HTMLDivElement>(null);
   const cursorAuraRef = useRef<HTMLDivElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
-  const { scrollYProgress } = useScroll({ target: containerRef, offset: ["start start", "end start"] });
-  const yHero = useTransform(scrollYProgress, [0, 1], [0, -120]);
-  const [skillIcons, setSkillIcons] = useState<{ src: string; name: string }[]>([]);
-  const [iconPositions, setIconPositions] = useState<Array<{ top: string; left: string }>>([]);
 
   const personData = {
     name: 'Puspal',
@@ -27,6 +24,7 @@ export default function Home() {
       'https://twitter.com/paul_puspal'
     ]
   };
+    
 
   useEffect(() => {
     const handleMouseMove = (e: MouseEvent) => {
@@ -56,97 +54,7 @@ export default function Home() {
     };
   }, []);
 
-  // Fetch skill icons from API (public/skills)
-  useEffect(() => {
-    const loadSkills = async () => {
-      try {
-        const res = await fetch('/api/skills');
-        const data = await res.json();
-        setSkillIcons(Array.isArray(data.icons) ? data.icons : []);
-      } catch {
-        setSkillIcons([]);
-      }
-    };
-    loadSkills();
-  }, []);
 
-  // Generate random positions in edge zones, excluding the central hero area
-  useEffect(() => {
-    if (!skillIcons.length) return;
-
-    // Allowed bands in percentages: left gutter (0-8%, 0-68%), right gutter (92-100%, 0-68%), top band (8-92%, 0-12%)
-    const bands = [
-      { x0: 0, x1: 8, y0: 0, y1: 68 },      // left gutter (avoid bottom)
-      { x0: 92, x1: 100, y0: 0, y1: 68 },   // right gutter (avoid bottom)
-      { x0: 8, x1: 92, y0: 0, y1: 12 },     // top band
-    ];
-
-    const count = Math.min(skillIcons.length, 18);
-    const positions: Array<{ top: string; left: string }> = [];
-    const points: Array<{ x: number; y: number }> = [];
-    const minDist = 6; // percentage units, prevents overlaps
-
-    const farEnough = (x: number, y: number) =>
-      points.every(p => {
-        const dx = p.x - x;
-        const dy = p.y - y;
-        return Math.hypot(dx, dy) >= minDist;
-      });
-
-    for (let i = 0; i < count; i++) {
-      let chosen: { x: number; y: number } | null = null;
-      let attempts = 0;
-      while (!chosen && attempts < 60) {
-        const band = bands[Math.floor(Math.random() * bands.length)];
-        const x = band.x0 + Math.random() * (band.x1 - band.x0);
-        const y = band.y0 + Math.random() * (band.y1 - band.y0);
-        if (farEnough(x, y)) {
-          chosen = { x, y };
-          points.push(chosen);
-          positions.push({ top: `${y}%`, left: `${x}%` });
-        }
-        attempts++;
-      }
-      // Fallback: if too dense, still place it in the same band with smaller spacing
-      if (!chosen) {
-        const band = bands[Math.floor(Math.random() * bands.length)];
-        const x = band.x0 + Math.random() * (band.x1 - band.x0);
-        const y = band.y0 + Math.random() * (band.y1 - band.y0);
-        points.push({ x, y });
-        positions.push({ top: `${y}%`, left: `${x}%` });
-      }
-    }
-    setIconPositions(positions);
-
-    const onResize = () => {
-      // Recompute to add slight jitter on resize
-      const newPositions: Array<{ top: string; left: string }>= [];
-      for (let i = 0; i < count; i++) {
-        const band = bands[i % bands.length];
-        const left = band.x0 + Math.random() * (band.x1 - band.x0);
-        const top = band.y0 + Math.random() * (band.y1 - band.y0);
-        newPositions.push({ top: `${top}%`, left: `${left}%` });
-      }
-      setIconPositions(newPositions);
-    };
-    window.addEventListener('resize', onResize);
-    return () => window.removeEventListener('resize', onResize);
-  }, [skillIcons]);
-
-  const FloatingElement = (
-    { children, delay = 0, className = "", style }: 
-    { children?: React.ReactNode, delay?: number, className?: string, style?: React.CSSProperties }
-  ) => (
-    <motion.div
-      className={`floating-element ${className}`}
-      style={style}
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ delay, duration: 0.8, ease: "easeOut" }}
-    >
-      {children}
-    </motion.div>
-  );
 
   const TypingText = ({ text, speed = 80, className = "" }: { text: string; speed?: number; className?: string }) => {
     const [display, setDisplay] = useState("");
@@ -313,7 +221,7 @@ export default function Home() {
                 {/* Main visual container */}
                 <div className="relative aspect-square rounded-3xl overflow-hidden">
                   {/* Central content */}
-                  <img src="/hero.png" alt='Hero Image' className="w-[2000px] h-auto"/>
+                  <Image src="/hero.png" alt='Hero Image' className="w-[2000px] h-auto"/>
                 </div>
               </div>
             </motion.div>
@@ -329,7 +237,7 @@ export default function Home() {
 
                 <Link href="/contact" className="button-secondary group flex items-center justify-center gap-3 min-w-[220px] shrink-0">
                   <FaLightbulb className="text-xl text-foreground/90 group-hover:text-white group-hover:animate-pulse" />
-                  <span className="uppercase tracking-wide whitespace-nowrap leading-none">LET'S COLLABORATE</span>
+                  <span className="uppercase tracking-wide whitespace-nowrap leading-none">LET&apos;S COLLABORATE</span>
                 </Link>
 
                 <a

@@ -19,9 +19,8 @@ export default function Navbar() {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  useEffect(() => {
-    setIsOpen(false);
-  }, [pathname]);
+
+
 
   useEffect(() => {
     if (isOpen) {
